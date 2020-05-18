@@ -6,7 +6,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     entry: {
-        app: path.resolve(__dirname, '../src/main.js')
+        app: path.resolve(__dirname, '../src/main.ts')
     },
     output: {
         path: path.resolve(__dirname, '../dist')
@@ -37,11 +37,19 @@ module.exports = {
             test: /\.vue$/,
             exclude: /node_modules/,
             loader: 'vue-loader'
+        }, {
+            test: /\.(tsx|ts)$/,
+            loader: 'ts-loader',
+            exclude: /node_modules/,
+            options: {
+                appendTsSuffixTo: [/\.vue$/]
+            }
         }]
     },
     resolve: {
         alias: {
             'vue$': 'vue/dist/vue.esm.js'
-        }
+        },
+        extensions: ['.js', '.vue', '.css', '.less', '.json', '.ts']
     }
 };

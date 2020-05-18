@@ -1,16 +1,19 @@
 import Vue from 'vue';
-import Vuex from 'vuex';
+import Vuex, { StoreOptions } from 'vuex';
+import { RootState } from './stateModel';
+import user from './user'
 
 Vue.use(Vuex);
 
-export default new Vuex.Store({
+const state: RootState = {
+    loginStatus: false,
+    language: 'zh'
+};
+const store: StoreOptions<RootState> = {
     modules: {
-
+        user,
     },
-    state: {
-        loginStatus: false,
-        language: 'zh'
-    },
+    state,
     mutations: {
         _login(state) {
             state.loginStatus = true;
@@ -18,7 +21,7 @@ export default new Vuex.Store({
         _logout(state) {
             state.loginStatus = false;
         },
-        _setLanguage(state, language) {
+        _setLanguage(state: RootState, language: string) {
             if (state.language !== language) {
                 state.language = language;
             }
@@ -31,18 +34,12 @@ export default new Vuex.Store({
         logout({ commit }) {
             commit('_logout');
         },
-        setLanguage({ commit }, language) {
+        setLanguage({ commit }, language: string) {
             commit('_logout', language);
         }
     },
     getters: {
 
     }
-});
-// store.dispatch('login')
-
-// computed: {
-//     isHideMenu() {
-//         return this.$store.state.sideShrink;
-//     }
-// }
+}
+export default new Vuex.Store<RootState>(store);

@@ -1,7 +1,8 @@
+import 'babel-polyfill';
 import Vue from 'vue';
 import view from './views/index.vue';
-import router from './router';
 import store from './store';
+import router from './router';
 
 new Vue({
     router,
