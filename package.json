@@ -29,9 +29,11 @@
   "devDependencies": {
     "@babel/core": "^7.9.6",
     "babel-loader": "^8.1.0",
+    "babel-plugin-component": "^1.1.1",
     "babel-polyfill": "^6.26.0",
     "clean-webpack-plugin": "^3.0.0",
     "css-loader": "^3.5.3",
+    "file-loader": "^6.0.0",
     "html-webpack-plugin": "^4.3.0",
     "less-loader": "^6.1.0",
     "less-plugin-clean-css": "^1.5.1",
@@ -53,6 +55,9 @@
     "webpack-merge": "^4.2.2"
   },
   "dependencies": {
+    "agentkeepalive": "^4.1.2",
+    "axios": "^0.19.2",
+    "element-ui": "^2.13.2",
     "vue": "^2.6.11",
     "vue-router": "^3.1.6",
     "vuex": "^3.4.0"

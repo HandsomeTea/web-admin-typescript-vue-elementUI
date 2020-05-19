@@ -47,6 +47,16 @@ module.exports = merge(common, {
     },
     module: {
         rules: [{
+            test: /\.(png|svg|jpg|jpeg|gif|woff|woff2|eot|ttf|otf|ico|pub)$/i,
+            use: [{
+                loader: 'file-loader',
+                options: {
+                    outputPath: 'image',
+                    publicPath: '../image',
+                    name: '[hash:20].[ext]'
+                }
+            }]
+        }, {
             test: /\.(css|less)$/,
             use: [{
                 loader: MiniCssExtractPlugin.loader,

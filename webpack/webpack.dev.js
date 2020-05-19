@@ -29,6 +29,16 @@ module.exports = merge(common, {
     },
     module: {
         rules: [{
+            test: /\.(png|svg|jpg|jpeg|gif|woff|woff2|eot|ttf|otf|ico|pub)$/i,
+            use: [{
+                loader: 'file-loader',
+                options: {
+                    outputPath: 'images',
+                    publicPath: '../images',
+                    name: '[name].[ext]'
+                }
+            }]
+        }, {
             test: /\.(css|less)$/,
             use: [{
                 loader: MiniCssExtractPlugin.loader,
@@ -37,10 +47,7 @@ module.exports = merge(common, {
                     hmr: process.env.NODE_ENV === 'development'
                 }
             }, {
-                loader: 'css-loader',
-                options: {
-                    importLoaders: 1
-                }
+                loader: 'css-loader'
             }, {
                 loader: 'postcss-loader'
             }, {
@@ -75,11 +82,11 @@ module.exports = merge(common, {
         // noInfo: true,
         open: true,
         overlay: true,//编译运行时的错误直接显示在浏览器
-        // proxy: [{
-        //     context: ['/tests'],
-        //     target: 'http://localhost:3000',
-        //     secure: false
-        // }],
+        proxy: [{
+            context: ['/tests'],
+            target: 'http://localhost:3000',
+            secure: false
+        }],
         // quiet: false,
         useLocalIp: true
     }

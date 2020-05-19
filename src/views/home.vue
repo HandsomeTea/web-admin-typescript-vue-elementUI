@@ -3,7 +3,7 @@
         test vue
         {{username}}
         <test></test>
-        <p>原data数据：{{test}}</p>
+        <p @click="testApi">原data数据：{{test}}</p>
         language {{language}}
     </div>
 </template>
@@ -11,8 +11,9 @@
 <script lang="ts">
 import { Vue, Component, Watch } from "vue-property-decorator";
 import { State, Action } from "vuex-class";
-import Test from "../components/test";
 import { RootState, UserState } from "../store/stateModel";
+import Test from "../components/test";
+import API from "../api";
 
 // 相当于原来vue的components属性
 @Component({
@@ -55,18 +56,33 @@ export default class Hoom extends Vue {
     }
 
     created() {
-        setInterval(() => {
-            const newName = "aaa" + new Date().getTime();
-
-            this.setUserName(newName); // 相当于store.dispatch('setUserName', newName);
-        }, 1000);
+        // setInterval(() => {
+        //     const newName = "aaa" + new Date().getTime();
+        //     this.setUserName(newName); // 相当于store.dispatch('setUserName', newName);
+        // }, 1000);
     }
     mounted() {}
+
+    /**
+     * 这种封装的写法只关注出错的情况，await是代码按序执行的关键
+     * 如果成功，result拿到的是成功的返回数据，逻辑继续往下走
+     * 如果失败，在catch中做失败的逻辑处理，并throw一个字符串消息(如果throw一个object会触发一些列Vue.config.warnHandler函数)，同时函数终止执行
+     * 失败throw出去的字符串在Vue.config.errorHandler中集中分析处理为一个给用户的提示消息
+     */
+    async testApi() {
+        console.log(123);
+        const result = await API.test().catch((e: httpException) => {
+            throw e.type || e.info || "用户保存失败";
+        });
+        console.log(456);
+        console.log(result);
+    }
 }
 </script>
 
 <style lang="less" scoped>
 .demo_style {
     color: @color;
+    transition: all 1s;
 }
 </style>

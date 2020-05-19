@@ -35,7 +35,7 @@ const store: StoreOptions<RootState> = {
             commit('_logout');
         },
         setLanguage({ commit }, language: string) {
-            commit('_logout', language);
+            commit('_setLanguage', language);
         }
     },
     getters: {
