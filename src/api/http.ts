@@ -9,7 +9,7 @@ import lang from '../lang';
 
 class Exception extends Error {
     private status: number;
-    private type: string;
+    private type?: string | undefined;
     private info: string | object;
     private httpInfo: string;
 
@@ -93,9 +93,8 @@ export default new class HTTP {
         const { baseURL/*, url, method*/ } = config;
 
         let errorResult: httpException = {
-            httpInfo: ` 访问 ${baseURL} 失败`,
             status: 500,
-            type: 'INTERNAL_SERVER_ERROR',
+            httpInfo: ` 访问 ${baseURL} 失败`,
             info: ''
         };
 
@@ -109,6 +108,7 @@ export default new class HTTP {
             };
         }
 
+        console.log(errorResult);
         throw new Exception(errorResult);
     }
 

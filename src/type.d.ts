@@ -7,6 +7,6 @@ declare interface httpArgument {
 declare interface httpException {
     httpInfo: string,
     status: number,
-    type: string,
+    type?: string,
     info: string | object
 }

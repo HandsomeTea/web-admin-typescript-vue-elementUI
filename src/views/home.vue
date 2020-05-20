@@ -9,11 +9,11 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Watch } from "vue-property-decorator";
-import { State, Action } from "vuex-class";
-import { RootState, UserState } from "../store/stateModel";
-import Test from "../components/test";
-import API from "../api";
+import { Vue, Component, Watch } from 'vue-property-decorator';
+import { State, Action } from 'vuex-class';
+import { RootState, UserState } from '../store/stateModel';
+import Test from '../components/test';
+import API from '../api';
 
 // 相当于原来vue的components属性
 @Component({
@@ -32,11 +32,11 @@ export default class Hoom extends Vue {
     @State(state => state.user)
     user!: UserState;
 
-    @State("language")
+    @State('language')
     language!: string;
 
     /** 获取vuex里面的改变数据的actions的函数 */
-    @Action("setUserName", { namespace: "user" })
+    @Action('setUserName', { namespace: 'user' })
     setUserName: any;
 
     // 相当于原vue中的computed
@@ -47,10 +47,10 @@ export default class Hoom extends Vue {
     /**
      * 相当于原vue中data数据
      */
-    test: string = "string-data";
+    test: string = 'string-data';
 
     //相当于原vue中的watch
-    @Watch("username", { immediate: true, deep: true })
+    @Watch('username', { immediate: true, deep: true })
     onChangeValue(newVal: string, oldVal: string) {
         console.log(this.username);
     }
@@ -72,7 +72,7 @@ export default class Hoom extends Vue {
     async testApi() {
         console.log(123);
         const result = await API.test().catch((e: httpException) => {
-            throw e.type || e.info || "用户保存失败";
+            throw e.type || 'USER_SAVE_FAILED';
         });
         console.log(456);
         console.log(result);
