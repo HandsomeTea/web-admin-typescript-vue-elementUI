@@ -5,7 +5,7 @@ import {
 } from 'element-ui';
 import { type } from '../utils';
 import store from '../store';
-import lang from '../lang';
+import i18n from '../lang';
 
 class Exception extends Error {
     private status: number;
@@ -67,7 +67,7 @@ export default new class HTTP {
     }
 
     async _beforeSendToServerButError(error: any) {
-        Message.error(store.state.language && lang[store.state.language] && lang[store.state.language]['FAILED'] || '失败(failed).');
+        Message.error(i18n.t('FAILED').toString());
         return Promise.reject(new Exception({
             httpInfo: `${error}`,
             status: 0,
@@ -79,7 +79,7 @@ export default new class HTTP {
     async _receiveSuccessResponse(response: AxiosResponse) {
         // 这里只处理 response.status >= 200 && response.status <= 207 的情况
         Message({
-            message: store.state.language && lang[store.state.language] && lang[store.state.language]['SUCCESS'] || '成功(success).',
+            message: i18n.t('SUCCESS').toString(),
             type: 'success'
         });
         const { data/*, config, headers, request, status, statusText*/ } = response;
