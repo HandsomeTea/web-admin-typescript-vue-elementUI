@@ -68,12 +68,12 @@ export default new class HTTP {
 
     async _beforeSendToServerButError(error: any) {
         Message.error(store.state.language && lang[store.state.language] && lang[store.state.language]['FAILED'] || '失败(failed).');
-        throw new Exception({
+        return Promise.reject(new Exception({
             httpInfo: `${error}`,
             status: 0,
             type: '',
             info: '请求发送失败'
-        });
+        }));
     }
 
     async _receiveSuccessResponse(response: AxiosResponse) {
@@ -108,7 +108,7 @@ export default new class HTTP {
             };
         }
 
-        throw new Exception(errorResult);
+        return Promise.reject(new Exception(errorResult));
     }
 
     async send(url: string, method: Method, options: httpArgument) {
