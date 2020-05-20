@@ -25,13 +25,6 @@ import {
 } from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 // import CollapseTransition from 'element-ui/lib/transitions/collapse-transition';
-// import zhLocale from 'element-ui/lib/locale/lang/zh-CN';
-// import locale from 'element-ui/lib/locale';
-// import store from '../store';
-
-// 设置语言
-// locale.use(zhLocale);
-// store.dispatch('setLanguage', 'zh');
 
 // 引入动画
 // Vue.component(CollapseTransition.name, CollapseTransition);

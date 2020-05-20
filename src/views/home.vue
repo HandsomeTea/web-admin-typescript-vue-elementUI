@@ -71,7 +71,7 @@ export default class Hoom extends Vue {
      */
     async testApi() {
         console.log(123);
-        const result = await API.test().catch((e: httpException) => {
+        const result = await API.test({ 'test-body': '中文测试' }).catch((e: httpException) => {
             throw e.type || 'USER_SAVE_FAILED';
         });
         console.log(456);

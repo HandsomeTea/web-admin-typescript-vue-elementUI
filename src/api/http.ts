@@ -108,7 +108,6 @@ export default new class HTTP {
             };
         }
 
-        console.log(errorResult);
         throw new Exception(errorResult);
     }
 

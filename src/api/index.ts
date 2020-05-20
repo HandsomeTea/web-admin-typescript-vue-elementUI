@@ -9,7 +9,7 @@ export default new class API {
 
     }
 
-    async test() {
-        return await HTTP.get('/tests/test/api', { data: { data: '说什么' } });
+    async test(body?: object) {
+        return await HTTP.get('/tests/test/api', { data: body });
     }
 }
