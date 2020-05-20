@@ -1,6 +1,6 @@
 <template>
     <div class="demo_style">
-        test vue
+        {{$t('SUCCESS')}}
         {{username}}
         <test></test>
         <p @click="testApi">原data数据：{{test}}</p>
@@ -39,6 +39,8 @@ export default class Hoom extends Vue {
     @Action('setUserName', { namespace: 'user' })
     setUserName: any;
 
+    @Action('setLanguage') setLanguage: any;
+
     // 相当于原vue中的computed
     get username(): string {
         return this.user.username; // 相当于 store.state.user.state.username
@@ -72,6 +74,7 @@ export default class Hoom extends Vue {
     async testApi() {
         console.log(123);
         const result = await API.test({ 'test-body': '中文测试' }).catch((e: httpException) => {
+            this.setLanguage('en');
             throw e.type || 'USER_SAVE_FAILED';
         });
         console.log(456);

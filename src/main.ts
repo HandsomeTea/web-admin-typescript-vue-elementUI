@@ -25,4 +25,21 @@ new Vue({
     store,
     i18n,
     render: h => h(view),
+    watch: {
+        $route(to/*, from*/) {
+            if (to.meta.title) {
+                document.title = `elementUI — ${to.meta.title}`;
+            }
+        },
+        lang() {
+            if (i18n.locale !== this.lang) {
+                i18n.locale = this.lang;
+            }
+        }
+    },
+    computed: {
+        lang() {
+            return store.state.language;
+        }
+    },
 }).$mount('#app');
