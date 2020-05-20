@@ -71,8 +71,7 @@ export default new class HTTP {
         return Promise.reject(new Exception({
             httpInfo: `${error}`,
             status: 0,
-            type: '',
-            info: '请求发送失败'
+            info: 'request send error: not send.'
         }));
     }
 
