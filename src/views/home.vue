@@ -1,10 +1,10 @@
 <template>
     <div class="demo_style">
-        {{$t('SUCCESS')}}
-        {{username}}
+        {{ $t('SUCCESS') }}
+        {{ username }}
         <test></test>
-        <p @click="testApi">原data数据：{{test}}</p>
-        language {{language}}
+        <p @click="testApi">原data数据：{{ test }}</p>
+        language {{ language }}
     </div>
 </template>
 
@@ -63,7 +63,7 @@ export default class Hoom extends Vue {
             this.setUserName(newName); // 相当于store.dispatch('setUserName', newName);
         }, 1000);
     }
-    mounted() {}
+    mounted() { }
 
     /**
      * 这种封装的写法只关注出错的情况，await是代码按序执行的关键

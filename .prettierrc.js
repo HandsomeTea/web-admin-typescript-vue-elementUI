@@ -12,3 +12,5 @@ module.exports = {
     htmlWhitespaceSensitivity: 'ignore',
     trailingComma: 'none'
 };
+
+//  "vetur.format.defaultFormatter.html": "prettier",
