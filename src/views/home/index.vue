@@ -1,19 +1,19 @@
 <template>
-    <div class="demo_style">
+    <el-main class="demo_style">
         {{ $t('SUCCESS') }}
         {{ username }}
         <test></test>
         <p @click="testApi">原data数据：{{ test }}</p>
         language {{ language }}
-    </div>
+    </el-main>
 </template>
 
 <script lang="ts">
 import { Vue, Component, Watch } from 'vue-property-decorator';
 import { State, Action } from 'vuex-class';
-import { RootState, UserState } from '../store/stateModel';
-import Test from '../components/test';
-import API from '../api';
+import { RootState, UserState } from '../../store/stateModel';
+import Test from '../../components/test.vue';
+import API from '../../api';
 
 // 相当于原来vue的components属性
 @Component({
@@ -58,10 +58,10 @@ export default class Hoom extends Vue {
     }
 
     created() {
-        setInterval(() => {
-            const newName = new Date().getTime();
-            this.setUserName(newName); // 相当于store.dispatch('setUserName', newName);
-        }, 1000);
+        // setInterval(() => {
+        //     const newName = new Date().getTime();
+        //     this.setUserName(newName); // 相当于store.dispatch('setUserName', newName);
+        // }, 1000);
     }
     mounted() { }
 
@@ -87,6 +87,5 @@ export default class Hoom extends Vue {
 <style lang="less" scoped>
 .demo_style {
     color: @color;
-    transition: all 1s;
 }
 </style>

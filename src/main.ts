@@ -8,7 +8,7 @@ import './ui-frame';
 import {
     Message
 } from 'element-ui';
-import lang from './lang';
+import './assets';
 Vue.config.productionTip = false;
 Vue.config.performance = true;
 Vue.config.errorHandler = (error, vm, info) => {

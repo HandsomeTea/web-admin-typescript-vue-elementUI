@@ -7,7 +7,8 @@ Vue.use(Vuex);
 
 const state: RootState = {
     loginStatus: false,
-    language: 'zh'
+    language: 'zh',
+    menuHidden: false
 };
 const store: StoreOptions<RootState> = {
     modules: {
@@ -15,6 +16,9 @@ const store: StoreOptions<RootState> = {
     },
     state,
     mutations: {
+        _toogleSideShrink(state) {
+            state.menuHidden = !state.menuHidden;
+        },
         _login(state) {
             state.loginStatus = true;
         },
@@ -28,6 +32,9 @@ const store: StoreOptions<RootState> = {
         }
     },
     actions: {
+        toogleSideShrink({ commit }) {
+            commit('_toogleSideShrink');
+        },
         login({ commit }) {
             commit('_login');
         },

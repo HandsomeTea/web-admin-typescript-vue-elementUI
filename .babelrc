@@ -1,19 +1,14 @@
 {
     "presets": [
-        ["es2015", {
-            "modules": false
-        }]
+        "@babel/preset-env"
     ],
     "plugins": [
-        [
-            "component",
+        "syntax-dynamic-import",
+        ["component",
             {
                 "libraryName": "element-ui",
                 "styleLibraryName": "theme-chalk"
             }
         ]
-    ],
-    "browserslist": [
-        "last 5 versions"
     ]
 }
