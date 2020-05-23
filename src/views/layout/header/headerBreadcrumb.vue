@@ -7,10 +7,13 @@
 
         <li class="item">
             <el-breadcrumb separator="/" class="route_path">
-                <el-breadcrumb-item>首页</el-breadcrumb-item>
-                <el-breadcrumb-item>活动管理</el-breadcrumb-item>
+                <el-breadcrumb-item v-if="(!isHideMenu && screenWidth > 630) || screenWidth > 450">
+                    首页
+                </el-breadcrumb-item>
+                <el-breadcrumb-item v-if="(!isHideMenu && screenWidth > 630) || screenWidth > 450">
+                    活动管理
+                </el-breadcrumb-item>
                 <el-breadcrumb-item>活动列表</el-breadcrumb-item>
-                <el-breadcrumb-item>活动详情</el-breadcrumb-item>
             </el-breadcrumb>
         </li>
     </ul>
@@ -29,12 +32,15 @@ export default class Breadcrumb extends Vue {
         return this.menuHiddenStatus;
     }
 
+    private screenWidth: number = document.body.clientWidth;
+
     @Action('toogleSideShrink')
     private toogleMenu: any;
 
     mounted() {
         // 监听窗口大小
         window.onresize = () => {
+            this.screenWidth = document.body.clientWidth;
             this.dealWithSideToggle();
         };
     }
@@ -56,6 +62,8 @@ export default class Breadcrumb extends Vue {
 <style lang="less" scoped>
 .head_title {
     left: @layout_menu_width_big;
+    height: @layout_head_height;
+    overflow: hidden;
 }
 
 .item {

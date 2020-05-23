@@ -8,10 +8,8 @@ import {
     MenuItem,
     MenuItemGroup,
     Submenu,
-    MessageBox,
     Breadcrumb,
-    BreadcrumbItem,
-    Message
+    BreadcrumbItem
 } from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import CollapseTransition from 'element-ui/lib/transitions/collapse-transition';
@@ -30,8 +28,3 @@ Vue.use(MenuItemGroup);
 Vue.use(Submenu);
 Vue.use(Breadcrumb);
 Vue.use(BreadcrumbItem);
-Vue.prototype.$msgbox = MessageBox;
-Vue.prototype.$message = Message;
-Vue.prototype.$alert = MessageBox.alert;
-Vue.prototype.$confirm = MessageBox.confirm;
-Vue.prototype.$prompt = MessageBox.prompt;

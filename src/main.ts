@@ -4,17 +4,13 @@ import store from './store';
 import router from './router';
 import i18n from './lang';
 import view from './views/index.vue';
+import UITools from './ui-frame/elementui/UI-tool';
 import './ui-frame';
-import {
-    Message
-} from 'element-ui';
 import './assets';
 Vue.config.productionTip = false;
 Vue.config.performance = true;
-Vue.config.errorHandler = (error, vm, info) => {
-    const msg: string = i18n.t(`${error}`).toString();
-
-    Message.error(msg);
+Vue.config.errorHandler = async (error, vm, info) => {
+    UITools.error(`${error}`);
 };
 Vue.config.warnHandler = (msg, vm, trace) => {
     console.error(msg);

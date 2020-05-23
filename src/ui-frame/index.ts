@@ -1,1 +1,1 @@
-import './element-ui';
+import './elementui/element-ui';

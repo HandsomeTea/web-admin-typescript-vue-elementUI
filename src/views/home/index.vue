@@ -72,10 +72,10 @@ export default class Hoom extends Vue {
      * 失败throw出去的字符串在Vue.config.errorHandler中集中分析处理为一个给用户的提示消息
      */
     private async testApi() {
-        console.log(this.$t('FAILED'));
+        // console.log(this.$t('FAILED'));
         console.log(123);
         const result = await API.test({ 'test-body': '中文测试' }).catch((e: httpException) => {
-            this.setLanguage('en');
+            // this.setLanguage('en');
             throw e.type || 'USER_SAVE_FAILED';
         });
         console.log(456);

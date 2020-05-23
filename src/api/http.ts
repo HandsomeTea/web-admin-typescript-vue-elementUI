@@ -1,11 +1,7 @@
 import axios, { AxiosRequestConfig, AxiosResponse, Method } from 'axios';
 import Agent from 'agentkeepalive';
-import {
-    Message
-} from 'element-ui';
 import { type } from '../utils';
-import store from '../store';
-import i18n from '../lang';
+import UITools from '../ui-frame/elementui/UI-tool';
 
 class Exception extends Error {
     private status: number;
@@ -47,7 +43,7 @@ export default new class HTTP {
     }
 
     _beforeSendToServer(config: AxiosRequestConfig) {
-        const zh = config.url && config.url.match(/[\u4e00-\u9fa5]/g);
+        const zh = config.url?.match(/[\u4e00-\u9fa5]/g);
 
         if (zh) {
             const _obj: object = {};
@@ -59,7 +55,7 @@ export default new class HTTP {
             }
 
             for (const key in _obj) {
-                config.url = config.url && config.url.replace(new RegExp(key, 'g'), _obj[key]);
+                config.url = config.url?.replace(new RegExp(key, 'g'), _obj[key]);
             }
         }
 
@@ -67,7 +63,7 @@ export default new class HTTP {
     }
 
     async _beforeSendToServerButError(error: any) {
-        Message.error(i18n.t('FAILED').toString());
+        UITools.error('FAILED');
         return Promise.reject(new Exception({
             httpInfo: `${error}`,
             status: 0,
@@ -77,10 +73,7 @@ export default new class HTTP {
 
     async _receiveSuccessResponse(response: AxiosResponse) {
         // 这里只处理 response.status >= 200 && response.status <= 207 的情况
-        Message({
-            message: i18n.t('SUCCESS').toString(),
-            type: 'success'
-        });
+        UITools.success('SUCCESS');
         const { data/*, config, headers, request, status, statusText*/ } = response;
 
         return Promise.resolve(data.data);
@@ -114,7 +107,7 @@ export default new class HTTP {
         return await axios.request({
             url,
             method,
-            baseURL: process && process.env && process.env.NODE_ENV && ['development', undefined].includes(process.env.NODE_ENV) ? undefined : 'https://xxx.xxx.cxx',
+            baseURL: ['development', undefined].includes(process?.env?.NODE_ENV) ? undefined : 'https://xxx.xxx.cxx',
             headers: options.headers,
             params: { ...options.params },
             data: { ...options.data }
