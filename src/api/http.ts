@@ -6,7 +6,7 @@ import UITools from '../ui-frame/elementui/UI-tool';
 class Exception extends Error {
     private status: number;
     private type?: string | undefined;
-    private info: string | object;
+    private error: object;
     private httpInfo: string;
 
     constructor(error: httpException) {
@@ -14,7 +14,7 @@ class Exception extends Error {
 
         this.status = error.status;
         this.type = error.type;
-        this.info = error.info;
+        this.error = error.error;
         this.httpInfo = error.httpInfo
     }
 }
@@ -67,7 +67,9 @@ export default new class HTTP {
         return Promise.reject(new Exception({
             httpInfo: `${error}`,
             status: 0,
-            info: 'request send error: not send.'
+            error: {
+                info: 'request send error: not send.'
+            }
         }));
     }
 
@@ -87,7 +89,7 @@ export default new class HTTP {
         let errorResult: httpException = {
             status: 500,
             httpInfo: ` 访问 ${baseURL} 失败`,
-            info: ''
+            error: { info: '' }
         };
 
         if (response) {
@@ -96,7 +98,7 @@ export default new class HTTP {
             errorResult = {
                 status,
                 httpInfo: statusText,
-                ...type(data) === 'string' ? { info: data } : data
+                ...type(data) === 'string' ? { error: { info: data } } : data
             };
         }
 

@@ -8,7 +8,7 @@ declare interface httpException {
     httpInfo: string,
     status: number,
     type?: string,
-    info: string | object
+    error: object
 }
 
 declare interface alertOption {
