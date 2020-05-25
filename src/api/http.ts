@@ -75,7 +75,7 @@ export default new class HTTP {
 
     async _receiveSuccessResponse(response: AxiosResponse) {
         // 这里只处理 response.status >= 200 && response.status <= 207 的情况
-        UITools.success('SUCCESS');
+        // UITools.success('SUCCESS');
         const { data/*, config, headers, request, status, statusText*/ } = response;
 
         return Promise.resolve(data.data);

@@ -44,3 +44,8 @@ declare interface noticeOption {
     onClose?: function,
     onClick?: function
 }
+
+declare interface apiResult {
+    data?: any,
+    error?: httpException
+}
