@@ -7,12 +7,12 @@
 
 <script lang="ts">
 import { Vue, Component } from "vue-property-decorator";
-import UITools from '../ui-frame/elementui/UI-tool';
+import eleUITools from '../ui-frame/elementui/UI-tool';
 
 @Component
 export default class Hoom extends Vue {
     private clossss() {
-        UITools.closeAllNotice()
+        eleUITools.closeAllNotice()
     }
 }
 </script>

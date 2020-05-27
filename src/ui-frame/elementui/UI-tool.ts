@@ -2,41 +2,39 @@ import { Message, MessageBox, Loading, Notification } from 'element-ui';
 import i18n from '../../lang';
 
 export default new class Tool {
-    private messageShowClose: boolean;
     private allNoticing: Set<Function>;
 
     constructor() {
         this.init();
-        this.messageShowClose = true;
         this.allNoticing = new Set();
     }
 
-    private init() {
+    private init(): void {
 
     }
 
-    private t(message: string) {
+    private t(message: string): string {
         return i18n.t(message).toString();
     }
 
-    public success(message: string) {
+    public success(message: string): void {
         Message({
-            showClose: this.messageShowClose,
+            showClose: true,
             message: this.t(message),
             type: 'success'
         });
     }
 
-    public error(message: string) {
+    public error(message: string): void {
         Message({
-            showClose: this.messageShowClose,
+            showClose: true,
             message: this.t(message),
             type: 'error'
         });
     }
-    public warn(message: string) {
+    public warn(message: string): void {
         Message({
-            showClose: this.messageShowClose,
+            showClose: true,
             message: this.t(message),
             type: 'warning'
         });
@@ -92,7 +90,7 @@ export default new class Tool {
         }).catch(() => false);
     }
 
-    public loading(option?: loadingOption) {
+    public loading(option?: loadingOption): ElLoadingComponent {
         return Loading.service({
             text: this.t(option?.text || ''),
             target: option?.target || 'body',
@@ -100,7 +98,7 @@ export default new class Tool {
         });
     }
 
-    public noticing(title: string, message: string, option?: noticeOption) {
+    public noticing(title: string, message: string, option?: noticeOption): ElNotificationComponent {
         const noticing = Notification({
             title: this.t(title),
             message: this.t(message),
@@ -117,7 +115,7 @@ export default new class Tool {
         return noticing;
     }
 
-    public noticed(title: string, message: string, option?: noticeOption) {
+    public noticed(title: string, message: string, option?: noticeOption): ElNotificationComponent {
         const noticed = Notification({
             title: this.t(title),
             message: this.t(message),
@@ -134,7 +132,7 @@ export default new class Tool {
         return noticed;
     }
 
-    public closeAllNotice() {
+    public closeAllNotice(): void {
         this.allNoticing.forEach(a => a());
     }
 }

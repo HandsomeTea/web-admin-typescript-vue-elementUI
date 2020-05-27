@@ -4,13 +4,13 @@ import store from './store';
 import router from './router';
 import i18n from './lang';
 import view from './views/index.vue';
-import UITools from './ui-frame/elementui/UI-tool';
+import eleUITools from './ui-frame/elementui/UI-tool';
 import './ui-frame';
 import './assets';
 Vue.config.productionTip = false;
 Vue.config.performance = true;
 Vue.config.errorHandler = async (error, vm, info) => {
-    UITools.error(`${error}`);
+    eleUITools.error(`${error}`);
 };
 Vue.config.warnHandler = (msg, vm, trace) => {
     console.error(msg);

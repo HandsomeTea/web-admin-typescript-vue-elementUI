@@ -1,7 +1,6 @@
 import axios, { AxiosRequestConfig, AxiosResponse, Method } from 'axios';
 import Agent from 'agentkeepalive';
 import { type } from '../utils';
-import UITools from '../ui-frame/elementui/UI-tool';
 
 class Exception extends Error {
     private status: number;
@@ -24,7 +23,7 @@ export default new class HTTP {
         this._init();
     }
 
-    _init() {
+    private _init(): void {
         axios.defaults.timeout = 10000;
         axios.defaults.httpAgent = new Agent({
             keepAlive: true,
@@ -42,7 +41,7 @@ export default new class HTTP {
         axios.interceptors.response.use(this._receiveSuccessResponse, this._receiveResponseNotSuccess);
     }
 
-    _beforeSendToServer(config: AxiosRequestConfig) {
+    private _beforeSendToServer(config: AxiosRequestConfig): AxiosRequestConfig {
         const zh = config.url?.match(/[\u4e00-\u9fa5]/g);
 
         if (zh) {
@@ -62,8 +61,7 @@ export default new class HTTP {
         return config;
     }
 
-    async _beforeSendToServerButError(error: any) {
-        UITools.error('FAILED');
+    private async _beforeSendToServerButError(error: any): Promise<httpException> {
         return Promise.reject(new Exception({
             httpInfo: `${error}`,
             status: 0,
@@ -73,15 +71,14 @@ export default new class HTTP {
         }));
     }
 
-    async _receiveSuccessResponse(response: AxiosResponse) {
+    private async _receiveSuccessResponse(response: AxiosResponse): Promise<any> {
         // 这里只处理 response.status >= 200 && response.status <= 207 的情况
-        // UITools.success('SUCCESS');
         const { data/*, config, headers, request, status, statusText*/ } = response;
 
         return Promise.resolve(data.data);
     }
 
-    async _receiveResponseNotSuccess(error: any) {
+    private async _receiveResponseNotSuccess(error: any): Promise<httpException> {
         // const { message, name, description, number, fileName, lineNumber, columnNumber, stack, code } = error.toJSON();
         const { response, config/*, request */ } = error;
         const { baseURL/*, url, method*/ } = config;
@@ -105,7 +102,7 @@ export default new class HTTP {
         return Promise.reject(new Exception(errorResult));
     }
 
-    async send(url: string, method: Method, options: httpArgument) {
+    public async send(url: string, method: Method, options: httpArgument): Promise<AxiosResponse<any>> {
         return await axios.request({
             url,
             method,
@@ -116,19 +113,19 @@ export default new class HTTP {
         });
     }
 
-    async post(url: string, options: httpArgument) {
+    public async post(url: string, options: httpArgument): Promise<AxiosResponse<any>> {
         return await this.send(url, 'post', { params: options.params, headers: options.headers, data: options.data });
     }
 
-    async delete(url: string, options: httpArgument) {
+    public async delete(url: string, options: httpArgument): Promise<AxiosResponse<any>> {
         return await this.send(url, 'delete', { params: options.params, headers: options.headers, data: options.data });
     }
 
-    async put(url: string, options: httpArgument) {
+    public async put(url: string, options: httpArgument): Promise<AxiosResponse<any>> {
         return await this.send(url, 'put', { params: options.params, headers: options.headers, data: options.data });
     }
 
-    async get(url: string, options: httpArgument) {
+    public async get(url: string, options: httpArgument): Promise<AxiosResponse<any>> {
         return await this.send(url, 'get', { params: options.params, headers: options.headers, data: options.data });
     }
 };

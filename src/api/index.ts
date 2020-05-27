@@ -7,7 +7,7 @@ export default new class API {
         this._init();
     }
 
-    _init() {
+    private _init(): void {
 
     }
 

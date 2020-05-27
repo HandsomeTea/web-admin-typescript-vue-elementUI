@@ -49,3 +49,11 @@ declare interface apiResult {
     data?: any,
     error?: httpException
 }
+
+declare interface ElLoadingComponent {
+    close(): void
+}
+
+declare interface ElNotificationComponent {
+    close(): void
+}

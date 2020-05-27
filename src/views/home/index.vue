@@ -14,7 +14,7 @@ import { State, Action } from 'vuex-class';
 import { RootState, UserState } from '../../store/stateModel';
 import Test from '../../components/test.vue';
 import API from '../../api';
-import UITools from '../../ui-frame/elementui/UI-tool';
+import eleUITools from '../../ui-frame/elementui/UI-tool';
 
 // 相当于原来vue的components属性
 @Component({
@@ -72,9 +72,10 @@ export default class Hoom extends Vue {
         const { error, data } = await API.test({ 'test-body': '中文测试' })
         if (error) {
             // throw error.type || 'USER_SAVE_FAILED';
-            // UITools.error(error.type || 'USER_SAVE_FAILED');
-            return;
+            // eleUITools.error('FAILED');
+            return eleUITools.error(error?.type || 'USER_SAVE_FAILED');
         }
+        eleUITools.success('SUCCESS');
         console.log(456);
         console.log(data);
     }
