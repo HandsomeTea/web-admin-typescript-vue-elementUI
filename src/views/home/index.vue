@@ -66,14 +66,14 @@ export default class Hoom extends Vue {
     }
     mounted() { }
 
-    private async testApi(): Promise<void> {
+    private async testApi(): Promise<void | boolean> {
         // console.log(this.$t('FAILED'));
         console.log(123);
         const { error, data } = await API.test({ 'test-body': '中文测试' })
         if (error) {
             // throw error.type || 'USER_SAVE_FAILED';
-            // eleUITools.error('FAILED');
-            return eleUITools.error(error?.type || 'USER_SAVE_FAILED');
+            return eleUITools.alert('test message', 'test');
+            // return eleUITools.error(error?.type || 'USER_SAVE_FAILED');
         }
         eleUITools.success('SUCCESS');
         console.log(456);

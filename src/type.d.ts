@@ -4,11 +4,16 @@ declare interface httpArgument {
     headers?: object
 }
 
+declare interface exceptionError {
+    info: string,
+    [key: string]: any
+}
+
 declare interface httpException {
     httpInfo: string,
     status: number,
     type?: string,
-    error: object
+    error: exceptionError
 }
 
 declare interface alertOption {
