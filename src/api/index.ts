@@ -1,5 +1,3 @@
-import { AxiosResponse } from 'axios';
-
 import HTTP from './http';
 
 export default new class API {
@@ -20,6 +18,6 @@ export default new class API {
     }
 
     public async test(body?: object): Promise<apiResult> {
-        return HTTP.get('/tests/test/api', { data: body }).then(async r => await this.successHandle(r)).catch(async e => this.errorHandle(e));
+        return HTTP.get('/tests/test/api', { data: body }).then(async r => await this.successHandle(r)).catch(async e => await this.errorHandle(e));
     }
 }
