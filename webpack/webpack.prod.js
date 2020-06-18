@@ -40,11 +40,9 @@ module.exports = merge(common, {
                 }]
             },
             canPrint: true
-        })
+        }),
+        new webpack.optimize.ModuleConcatenationPlugin()
     ],
-    optimization: {
-        minimize: true
-    },
     module: {
         rules: [{
             test: /\.(png|svg|jpg|jpeg|gif|woff|woff2|eot|ttf|otf|ico|pub)$/i,
