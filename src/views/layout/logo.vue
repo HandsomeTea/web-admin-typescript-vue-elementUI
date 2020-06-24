@@ -12,6 +12,8 @@ export default class Logo extends Vue { }
 <style lang="less" scoped>
 .layout_menu_header {
     height: calc(@layout_head_height - 1px);
-    border-bottom: solid 1px #e6e6e6;
+    color: #fff;
+    border-bottom: solid 1px @menu_background_color;
+    background-color: rgba(22, 24, 29, 0.92);
 }
 </style>

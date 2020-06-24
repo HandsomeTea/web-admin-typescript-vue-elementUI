@@ -61,7 +61,7 @@ export default new class HTTP {
         return config;
     }
 
-    private async _beforeSendToServerButError(error: any): Promise<httpException> {
+    private async _beforeSendToServerButError(error: unknown): Promise<httpException> {
         return Promise.reject(new Exception({
             httpInfo: `${error}`,
             status: 0,

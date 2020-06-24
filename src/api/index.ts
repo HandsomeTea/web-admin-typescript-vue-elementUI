@@ -13,7 +13,7 @@ export default new class API {
         return Promise.resolve({ error });
     }
 
-    private successHandle(data: any): Promise<apiResult> {
+    private successHandle(data: unknown): Promise<apiResult> {
         return Promise.resolve({ data });
     }
 

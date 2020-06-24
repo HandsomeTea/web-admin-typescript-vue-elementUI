@@ -6,7 +6,7 @@ declare interface httpArgument {
 
 declare interface exceptionError {
     info: string,
-    [key: string]: any
+    [key: string]: unknown
 }
 
 declare interface httpException {
@@ -51,7 +51,7 @@ declare interface noticeOption {
 }
 
 declare interface apiResult {
-    data?: any,
+    data?: unknown,
     error?: httpException
 }
 

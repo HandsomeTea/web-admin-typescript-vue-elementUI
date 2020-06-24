@@ -1,6 +1,15 @@
 <template>
     <el-collapse-transition>
-        <el-menu default-active="2" :collapse="isHideMenu" class="layout_menu">
+        <!-- :show-timeout="0"
+            :hide-timeout="0" -->
+        <el-menu
+            default-active="2"
+            :collapse="isHideMenu"
+            class="layout_menu"
+            background-color="#16181D"
+            text-color="rgba(255,255,255,.7)"
+            active-text-color="#409EFF"
+        >
             <el-submenu index="1">
                 <template slot="title">
                     <i class="el-icon-location"></i>
@@ -54,19 +63,19 @@ export default class Menu extends Vue {
 .layout_menu {
     overflow-y: auto;
     overflow-x: hidden;
-    height: calc(100% - @layout_head_height);
+    height: calc(100% - @layout_head_height) !important;
 }
 
 .layout_menu::-webkit-scrollbar {
-    width: 2px;
+    width: 4px;
 }
 
 .layout_menu::-webkit-scrollbar-thumb {
-    background: rgba(0, 0, 0, 0.2);
+    background: @system_theme_color;
 }
 
 .layout_menu::-webkit-scrollbar-track {
     background: rgba(0, 0, 0, 0);
-    box-shadow: inset 0 0 0px rgba(0, 0, 0, 0.2);
+    box-shadow: inset 0 0 0px rgba(0, 0, 0, 0);
 }
 </style>

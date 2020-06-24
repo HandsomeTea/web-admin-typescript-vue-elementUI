@@ -84,6 +84,6 @@ export default class Hoom extends Vue {
 
 <style lang="less" scoped>
 .demo_style {
-    color: @color;
+    color: @system_theme_color;
 }
 </style>
