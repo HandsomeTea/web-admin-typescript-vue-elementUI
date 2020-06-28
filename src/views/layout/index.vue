@@ -55,7 +55,7 @@ body > .el-container {
 }
 
 .el-aside {
-    background-color: #fff;
+    background-color: rgb(22, 24, 29);
     border-right: solid 1px #e6e6e6;
     overflow: hidden;
 }
