@@ -6,16 +6,15 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from "vue-property-decorator";
+import { Vue, Component } from 'vue-property-decorator';
 import eleUITools from '../ui-frame/elementui/UI-tool';
 
 @Component
 export default class Hoom extends Vue {
     private clossss() {
-        eleUITools.closeAllNotice()
+        eleUITools.closeAllNotice();
     }
 }
 </script>
 
-<style lang="less" scoped>
-</style>
+<style lang="less" scoped></style>

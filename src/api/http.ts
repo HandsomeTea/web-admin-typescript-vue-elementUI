@@ -1,11 +1,11 @@
-import axios, { AxiosRequestConfig, AxiosResponse, Method } from 'axios';
+import axios, { AxiosRequestConfig, AxiosResponse, AxiosError, Method } from 'axios';
 import Agent from 'agentkeepalive';
 import { type } from '../utils';
 
 class Exception extends Error {
     private status: number;
     private type?: string | undefined;
-    private error: object;
+    private error: Record<string, unknown>;
     private httpInfo: string;
 
     constructor(error: httpException) {
@@ -14,11 +14,11 @@ class Exception extends Error {
         this.status = error.status;
         this.type = error.type;
         this.error = error.error;
-        this.httpInfo = error.httpInfo
+        this.httpInfo = error.httpInfo;
     }
 }
 
-export default new class HTTP {
+class HTTP {
     constructor() {
         this._init();
     }
@@ -45,9 +45,9 @@ export default new class HTTP {
         const zh = config.url?.match(/[\u4e00-\u9fa5]/g);
 
         if (zh) {
-            const _obj: object = {};
+            const _obj: Record<string, string> = {};
 
-            for (let i: number = 0; i < zh.length; i++) {
+            for (let i = 0; i < zh.length; i++) {
                 if (!_obj[zh[i]]) {
                     _obj[zh[i]] = encodeURIComponent(zh[i]);
                 }
@@ -62,26 +62,29 @@ export default new class HTTP {
     }
 
     private async _beforeSendToServerButError(error: unknown): Promise<httpException> {
-        return Promise.reject(new Exception({
-            httpInfo: `${error}`,
-            status: 0,
-            error: {
-                info: 'request send error: not send.'
-            }
-        }));
+        return Promise.reject(
+            new Exception({
+                httpInfo: `${error}`,
+                status: 0,
+                error: {
+                    info: 'request send error: not send.'
+                }
+            })
+        );
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     private async _receiveSuccessResponse(response: AxiosResponse): Promise<any> {
         // 这里只处理 response.status >= 200 && response.status <= 207 的情况
-        const { data/*, config, headers, request, status, statusText*/ } = response;
+        const { data /*, config, headers, request, status, statusText*/ } = response;
 
         return Promise.resolve(data.data);
     }
 
-    private async _receiveResponseNotSuccess(error: any): Promise<httpException> {
+    private async _receiveResponseNotSuccess(error: AxiosError): Promise<httpException> {
         // const { message, name, description, number, fileName, lineNumber, columnNumber, stack, code } = error.toJSON();
-        const { response, config/*, request */ } = error;
-        const { baseURL/*, url, method*/ } = config;
+        const { response, config /*, request */ } = error;
+        const { baseURL /*, url, method*/ } = config;
 
         let errorResult: httpException = {
             status: 500,
@@ -95,6 +98,7 @@ export default new class HTTP {
             errorResult = {
                 status,
                 httpInfo: statusText,
+                // eslint-disable-next-line prettier/prettier
                 ...type(data) === 'string' ? { error: { info: data } } : data
             };
         }
@@ -102,7 +106,7 @@ export default new class HTTP {
         return Promise.reject(new Exception(errorResult));
     }
 
-    public async send(url: string, method: Method, options: httpArgument): Promise<AxiosResponse<any>> {
+    public async send(url: string, method: Method, options: httpArgument): Promise<AxiosResponse> {
         return await axios.request({
             url,
             method,
@@ -113,19 +117,21 @@ export default new class HTTP {
         });
     }
 
-    public async post(url: string, options: httpArgument): Promise<AxiosResponse<any>> {
+    public async post(url: string, options: httpArgument): Promise<AxiosResponse> {
         return await this.send(url, 'post', { params: options.params, headers: options.headers, data: options.data });
     }
 
-    public async delete(url: string, options: httpArgument): Promise<AxiosResponse<any>> {
+    public async delete(url: string, options: httpArgument): Promise<AxiosResponse> {
         return await this.send(url, 'delete', { params: options.params, headers: options.headers, data: options.data });
     }
 
-    public async put(url: string, options: httpArgument): Promise<AxiosResponse<any>> {
+    public async put(url: string, options: httpArgument): Promise<AxiosResponse> {
         return await this.send(url, 'put', { params: options.params, headers: options.headers, data: options.data });
     }
 
-    public async get(url: string, options: httpArgument): Promise<AxiosResponse<any>> {
+    public async get(url: string, options: httpArgument): Promise<AxiosResponse> {
         return await this.send(url, 'get', { params: options.params, headers: options.headers, data: options.data });
     }
-};
+}
+
+export default new HTTP();

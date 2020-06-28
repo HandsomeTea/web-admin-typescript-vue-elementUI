@@ -11,7 +11,7 @@
 <script lang="ts">
 import { Vue, Component, Watch } from 'vue-property-decorator';
 import { State, Action } from 'vuex-class';
-import { RootState, UserState } from '../../store/stateModel';
+import { RootState, UserState, StoreAction } from '../../store/stateModel';
 import Test from '../../components/test.vue';
 import API from '../../api';
 import eleUITools from '../../ui-frame/elementui/UI-tool';
@@ -38,9 +38,10 @@ export default class Hoom extends Vue {
 
     /** 获取vuex里面的改变数据的actions的函数 */
     @Action('setUserName', { namespace: 'user' })
-    private setUserName: any;
+    private setUserName: StoreAction;
 
-    @Action('setLanguage') setLanguage: any;
+    @Action('setLanguage')
+    private setLanguage: StoreAction;
 
     // 相当于原vue中的computed
     private get username(): string {
@@ -50,34 +51,34 @@ export default class Hoom extends Vue {
     /**
      * 相当于原vue中data数据
      */
-    private test: string = 'string-data';
+    private test = 'string-data';
 
     //相当于原vue中的watch
     @Watch('username', { immediate: true, deep: true })
-    private onChangeUsername(newVal: string, oldVal: string) {
-        console.log(this.username);
+    private onChangeUsername(/*newVal: string, oldVal: string*/) {
+        console.log(this.username); /* eslint-disable-line no-console */
     }
 
-    created() {
+    created(): void {
         // setInterval(() => {
         //     const newName = new Date().getTime();
         //     this.setUserName(newName); // 相当于store.dispatch('setUserName', newName);
         // }, 1000);
     }
-    mounted() { }
 
     private async testApi(): Promise<void | boolean> {
         // console.log(this.$t('FAILED'));
-        console.log(123);
-        const { error, data } = await API.test({ 'test-body': '中文测试' })
+        console.log(123); /* eslint-disable-line no-console */
+        const { error, data } = await API.test({ 'test-body': '中文测试' });
+
         if (error) {
             // throw error.type || 'USER_SAVE_FAILED';
             return eleUITools.alert('test message', 'test');
             // return eleUITools.error(error?.type || 'USER_SAVE_FAILED');
         }
         eleUITools.success('SUCCESS');
-        console.log(456);
-        console.log(data);
+        console.log(456); /* eslint-disable-line no-console */
+        console.log(data); /* eslint-disable-line no-console */
     }
 }
 </script>

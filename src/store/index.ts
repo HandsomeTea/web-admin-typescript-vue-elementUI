@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Vuex, { StoreOptions } from 'vuex';
 import { RootState } from './stateModel';
-import user from './user'
+import user from './user';
 
 Vue.use(Vuex);
 
@@ -12,7 +12,7 @@ const state: RootState = {
 };
 const store: StoreOptions<RootState> = {
     modules: {
-        user,
+        user
     },
     state,
     mutations: {
@@ -45,8 +45,7 @@ const store: StoreOptions<RootState> = {
             commit('_setLanguage', language);
         }
     },
-    getters: {
+    getters: {}
+};
 
-    }
-}
 export default new Vuex.Store<RootState>(store);

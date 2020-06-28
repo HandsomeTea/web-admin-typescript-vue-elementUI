@@ -1,1 +1,5 @@
-export default (data: unknown) => toString.call(data).replace(/object|\[|]|\s/g, '').toLowerCase();
+export default (data: unknown): string =>
+    toString
+        .call(data)
+        .replace(/object|\[|]|\s/g, '')
+        .toLowerCase();

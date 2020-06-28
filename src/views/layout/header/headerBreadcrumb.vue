@@ -22,6 +22,7 @@
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
 import { State, Action } from 'vuex-class';
+import { StoreAction } from '../../../store/stateModel';
 
 @Component
 export default class Breadcrumb extends Vue {
@@ -35,9 +36,9 @@ export default class Breadcrumb extends Vue {
     private screenWidth: number = document.body.clientWidth;
 
     @Action('toogleSideShrink')
-    private toogleMenu: any;
+    private toogleMenu: StoreAction;
 
-    mounted() {
+    mounted(): void {
         // 监听窗口大小
         window.onresize = () => {
             this.screenWidth = document.body.clientWidth;

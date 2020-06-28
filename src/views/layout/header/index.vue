@@ -12,11 +12,11 @@ import Options from './headerOption.vue';
 
 @Component({
     components: {
-        Title, Options
+        Title,
+        Options
     }
 })
-export default class Head extends Vue { }
+export default class Head extends Vue {}
 </script>
 
-<style lang="less" scoped>
-</style>
+<style lang="less" scoped></style>

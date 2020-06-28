@@ -28,44 +28,54 @@ module.exports = merge(common, {
         minimize: false
     },
     module: {
-        rules: [{
-            test: /\.(png|svg|jpg|jpeg|gif|woff|woff2|eot|ttf|otf|ico|pub)$/i,
-            use: [{
-                loader: 'file-loader',
-                options: {
-                    outputPath: 'images',
-                    publicPath: '../images',
-                    name: '[name].[ext]'
-                }
-            }]
-        }, {
-            test: /\.(css|less)$/,
-            use: [{
-                loader: MiniCssExtractPlugin.loader,
-                options: {
-                    publicPath: path.resolve(__dirname, '../dist'),
-                    hmr: process.env.NODE_ENV === 'development'
-                }
-            }, {
-                loader: 'css-loader'
-            }, {
-                loader: 'postcss-loader'
-            }, {
-                loader: 'less-loader',
-                options: {
-                    lessOptions: {
-                        strictMath: true,
-                        noIeCompat: true
+        rules: [
+            {
+                test: /\.(png|svg|jpg|jpeg|gif|woff|woff2|eot|ttf|otf|ico|pub)$/i,
+                use: [
+                    {
+                        loader: 'file-loader',
+                        options: {
+                            outputPath: 'images',
+                            publicPath: '../images',
+                            name: '[name].[ext]'
+                        }
                     }
-                }
-            }, {
-                loader: 'style-resources-loader',
-                options: {
-                    patterns: [path.resolve(__dirname, '../src/assets/css/base/global.less')]
-                }
+                ]
+            },
+            {
+                test: /\.(css|less)$/,
+                use: [
+                    {
+                        loader: MiniCssExtractPlugin.loader,
+                        options: {
+                            publicPath: path.resolve(__dirname, '../dist'),
+                            hmr: process.env.NODE_ENV === 'development'
+                        }
+                    },
+                    {
+                        loader: 'css-loader'
+                    },
+                    {
+                        loader: 'postcss-loader'
+                    },
+                    {
+                        loader: 'less-loader',
+                        options: {
+                            lessOptions: {
+                                strictMath: true,
+                                noIeCompat: true
+                            }
+                        }
+                    },
+                    {
+                        loader: 'style-resources-loader',
+                        options: {
+                            patterns: [path.resolve(__dirname, '../src/assets/css/base/global.less')]
+                        }
+                    }
+                ]
             }
-            ]
-        }]
+        ]
     },
     devServer: {
         contentBase: path.resolve(__dirname, '../dist'),
@@ -81,12 +91,14 @@ module.exports = merge(common, {
         // lazy: false,
         // noInfo: true,
         open: true,
-        overlay: true,//编译运行时的错误直接显示在浏览器
-        proxy: [{
-            context: ['/tests'],
-            target: 'http://localhost:3000',
-            secure: false
-        }],
+        overlay: true, //编译运行时的错误直接显示在浏览器
+        proxy: [
+            {
+                context: ['/tests'],
+                target: 'http://localhost:3000',
+                secure: false
+            }
+        ],
         // quiet: false,
         useLocalIp: true
     }

@@ -6,7 +6,7 @@
 import { Vue, Component } from 'vue-property-decorator';
 
 @Component
-export default class Logo extends Vue { }
+export default class Logo extends Vue {}
 </script>
 
 <style lang="less" scoped>

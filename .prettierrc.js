@@ -10,7 +10,8 @@ module.exports = {
     jsxBracketSameLine: true,
     arrowParens: 'avoid',
     htmlWhitespaceSensitivity: 'ignore',
-    trailingComma: 'none'
+    trailingComma: 'none',
+    endOfLine: 'auto',
 };
 
 //  "vetur.format.defaultFormatter.html": "prettier",

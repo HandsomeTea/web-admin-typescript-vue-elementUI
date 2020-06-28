@@ -24,7 +24,9 @@ import Header from './header/index.vue';
 
 @Component({
     components: {
-        Menu, Logo, Header
+        Menu,
+        Logo,
+        Header
     }
 })
 export default class Layout extends Vue {

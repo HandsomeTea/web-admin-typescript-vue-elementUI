@@ -7,7 +7,8 @@
     "start": "webpack-dev-server --config webpack/webpack.dev.js",
     "build": "webpack --config webpack/webpack.prod.js",
     "upgrade": "./node_modules/.bin/npm-check -u",
-    "tsc-init": "./node_modules/.bin/tsc --init"
+    "tsc-init": "./node_modules/.bin/tsc --init",
+    "eslint": "./node_modules/.bin/eslint ./ --ext .ts,.js,.vue --fix"
   },
   "repository": {
     "type": "git",
@@ -35,12 +36,19 @@
   "devDependencies": {
     "@babel/core": "^7.10.3",
     "@babel/preset-env": "^7.10.3",
+    "@typescript-eslint/eslint-plugin": "^3.4.0",
+    "@typescript-eslint/parser": "^3.4.0",
+    "@vue/eslint-config-prettier": "^6.0.0",
+    "@vue/eslint-config-typescript": "^5.0.2",
     "babel-loader": "^8.1.0",
     "babel-plugin-component": "^1.1.1",
     "babel-plugin-syntax-dynamic-import": "^6.18.0",
     "babel-polyfill": "^6.26.0",
     "clean-webpack-plugin": "^3.0.0",
     "css-loader": "^3.6.0",
+    "eslint": "^7.3.1",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-vue": "^6.2.2",
     "file-loader": "^6.0.0",
     "html-webpack-plugin": "^4.3.0",
     "less-loader": "^6.1.2",

@@ -1,16 +1,16 @@
 import { Message, MessageBox, Loading, Notification } from 'element-ui';
 import i18n from '../../lang';
 
-export default new class Tool {
-    private allNoticing: Set<Function>;
+interface closeNotificationFn {
+    (): void;
+    //左边表示函数的输入类型，右边表示输出类型
+}
+
+class UITool {
+    private allNoticing: Set<closeNotificationFn>;
 
     constructor() {
-        this.init();
         this.allNoticing = new Set();
-    }
-
-    private init(): void {
-
     }
 
     private t(message: string): string {
@@ -62,7 +62,9 @@ export default new class Tool {
             closeOnClickModal: false,
             closeOnPressEscape: false,
             showInput: false
-        }).then(() => true).catch(() => false);
+        })
+            .then(() => true)
+            .catch(() => false);
     }
 
     public async prompt(message: string, title: string, option?: promptOption): Promise<string | false> {
@@ -81,13 +83,15 @@ export default new class Tool {
             inputPattern: option?.inputPattern || /.*/,
             inputValidator: option?.inputValidator,
             inputErrorMessage: this.t(option?.inputErrorMessage || 'it_is_illegal')
-        }).then(data => {
-            if (data === 'cancel' || data === 'close' || data === 'confirm') {
-                return false;
-            } else {
-                return data.value;
-            }
-        }).catch(() => false);
+        })
+            .then(data => {
+                if (data === 'cancel' || data === 'close' || data === 'confirm') {
+                    return false;
+                } else {
+                    return data.value;
+                }
+            })
+            .catch(() => false);
     }
 
     public loading(option?: loadingOption): ElLoadingComponent {
@@ -136,3 +140,5 @@ export default new class Tool {
         this.allNoticing.forEach(a => a());
     }
 }
+
+export default new UITool();

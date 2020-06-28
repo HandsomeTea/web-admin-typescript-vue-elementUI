@@ -33,61 +33,73 @@ module.exports = merge(common, {
             assetNameRegExp: /\.css$/g,
             cssProcessor: require('cssnano'),
             cssProcessorPluginOptions: {
-                preset: ['default', {
-                    discardComments: {
-                        removeAll: true
+                preset: [
+                    'default',
+                    {
+                        discardComments: {
+                            removeAll: true
+                        }
                     }
-                }]
+                ]
             },
             canPrint: true
         }),
         new webpack.optimize.ModuleConcatenationPlugin()
     ],
     module: {
-        rules: [{
-            test: /\.(png|svg|jpg|jpeg|gif|woff|woff2|eot|ttf|otf|ico|pub)$/i,
-            use: [{
-                loader: 'file-loader',
-                options: {
-                    outputPath: 'image',
-                    publicPath: '../image',
-                    name: '[hash:20].[ext]'
-                }
-            }]
-        }, {
-            test: /\.(css|less)$/,
-            use: [{
-                loader: MiniCssExtractPlugin.loader,
-                options: {
-                    publicPath: path.resolve(__dirname, '../dist'),
-                    hmr: process.env.NODE_ENV === 'production'
-                }
-            }, {
-                loader: 'css-loader',
-                options: {
-                    importLoaders: 1
-                }
-            }, {
-                loader: 'postcss-loader'
-            }, {
-                loader: 'less-loader',
-                options: {
-                    lessOptions: {
-                        plugins: [
-                            new CleanCSSPlugin({
-                                advanced: true
-                            })
-                        ]
+        rules: [
+            {
+                test: /\.(png|svg|jpg|jpeg|gif|woff|woff2|eot|ttf|otf|ico|pub)$/i,
+                use: [
+                    {
+                        loader: 'file-loader',
+                        options: {
+                            outputPath: 'image',
+                            publicPath: '../image',
+                            name: '[hash:20].[ext]'
+                        }
                     }
-                }
-            }, {
-                loader: 'style-resources-loader',
-                options: {
-                    patterns: [
-                        path.resolve(__dirname, '../src/assets/css/base/global.less')
-                    ]
-                }
-            }]
-        }]
+                ]
+            },
+            {
+                test: /\.(css|less)$/,
+                use: [
+                    {
+                        loader: MiniCssExtractPlugin.loader,
+                        options: {
+                            publicPath: path.resolve(__dirname, '../dist'),
+                            hmr: process.env.NODE_ENV === 'production'
+                        }
+                    },
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            importLoaders: 1
+                        }
+                    },
+                    {
+                        loader: 'postcss-loader'
+                    },
+                    {
+                        loader: 'less-loader',
+                        options: {
+                            lessOptions: {
+                                plugins: [
+                                    new CleanCSSPlugin({
+                                        advanced: true
+                                    })
+                                ]
+                            }
+                        }
+                    },
+                    {
+                        loader: 'style-resources-loader',
+                        options: {
+                            patterns: [path.resolve(__dirname, '../src/assets/css/base/global.less')]
+                        }
+                    }
+                ]
+            }
+        ]
     }
 });

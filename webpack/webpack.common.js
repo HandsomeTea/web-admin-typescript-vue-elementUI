@@ -36,14 +36,12 @@ module.exports = {
             maxInitialRequests: 4,
             cacheGroups: {
                 vendor: {
-                    test: (module) => {
+                    test: module => {
                         return (
                             module.resource &&
                             /\.js$/.test(module.resource) &&
-                            module.resource.indexOf(
-                                path.join(__dirname, '../node_modules')
-                            ) === 0
-                        )
+                            module.resource.indexOf(path.join(__dirname, '../node_modules')) === 0
+                        );
                     },
                     name: 'vendor'
                 },
@@ -61,26 +59,30 @@ module.exports = {
         minimize: true
     },
     module: {
-        rules: [{
-            test: /\.js$/,
-            exclude: /node_modules/,
-            use: 'babel-loader'
-        }, {
-            test: /\.vue$/,
-            exclude: /node_modules/,
-            loader: 'vue-loader'
-        }, {
-            test: /\.(tsx|ts)$/,
-            loader: 'ts-loader',
-            exclude: /node_modules/,
-            options: {
-                appendTsSuffixTo: [/\.vue$/]
+        rules: [
+            {
+                test: /\.js$/,
+                exclude: /node_modules/,
+                use: 'babel-loader'
+            },
+            {
+                test: /\.vue$/,
+                exclude: /node_modules/,
+                loader: 'vue-loader'
+            },
+            {
+                test: /\.(tsx|ts)$/,
+                loader: 'ts-loader',
+                exclude: /node_modules/,
+                options: {
+                    appendTsSuffixTo: [/\.vue$/]
+                }
             }
-        }]
+        ]
     },
     resolve: {
         alias: {
-            'vue$': 'vue/dist/vue.esm.js'
+            vue$: 'vue/dist/vue.esm.js'
         },
         extensions: ['.js', '.vue', '.css', '.less', '.json', '.ts']
     }
