@@ -24,6 +24,7 @@ module.exports = {
         window: true
     },
     rules: {
+        '@typescript-eslint/no-inferrable-types': 2, //类型推断
         'prettier/prettier': 'error',
         indent: [2, 4, { SwitchCase: 1 }], //缩进风格
         'linebreak-style': [0, 'error', 'windows', 'unix'], //换行风格
