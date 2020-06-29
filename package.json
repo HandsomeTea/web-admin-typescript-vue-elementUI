@@ -91,7 +91,7 @@
     }
   },
   "lint-staged": {
-    "*.{js,ts,vue}": [
+    "**/*.{js,ts,vue}": [
       "npm run eslint"
     ]
   }
