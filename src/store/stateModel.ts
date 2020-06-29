@@ -8,7 +8,10 @@ export interface UserState {
     username: string;
 }
 
-export interface StoreAction {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (...args: any[]): void;
+export interface toogleSideAction {
+    (): never;
+}
+
+export interface setLanguageAction {
+    (language: 'zh' | 'en'): never;
 }

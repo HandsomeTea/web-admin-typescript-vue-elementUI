@@ -11,7 +11,7 @@
 <script lang="ts">
 import { Vue, Component, Watch } from 'vue-property-decorator';
 import { State, Action } from 'vuex-class';
-import { RootState, UserState, StoreAction } from '../../store/stateModel';
+import { RootState, UserState, setLanguageAction } from '../../store/stateModel';
 import Test from '../../components/test.vue';
 import API from '../../api';
 import eleUITools from '../../ui-frame/elementui/UI-tool';
@@ -37,11 +37,8 @@ export default class Hoom extends Vue {
     private language!: string;
 
     /** 获取vuex里面的改变数据的actions的函数 */
-    @Action('setUserName', { namespace: 'user' })
-    private setUserName: StoreAction;
-
     @Action('setLanguage')
-    private setLanguage: StoreAction;
+    private setLanguage: setLanguageAction;
 
     // 相当于原vue中的computed
     private get username(): string {
