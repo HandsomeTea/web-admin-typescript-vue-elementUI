@@ -61,9 +61,12 @@ export default class Menu extends Vue {
 
 <style lang="less" scoped>
 .layout_menu {
-    overflow-y: auto;
-    overflow-x: hidden;
+    overflow: hidden;
     height: calc(100% - @layout_head_height) !important;
+}
+
+.layout_menu:hover {
+    overflow-y: auto;
 }
 
 .layout_menu::-webkit-scrollbar {

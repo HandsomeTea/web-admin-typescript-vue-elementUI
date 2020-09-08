@@ -1,3 +1,18 @@
-import type from './type';
-
-export { type };
+export {
+    typeIs,
+    isString,
+    isObject,
+    isArray,
+    isNumber,
+    isBoolean,
+    isDate,
+    isFunction,
+    isPromise,
+    isPromiseFn,
+    isUndefined,
+    isNull,
+    isError,
+    isSet,
+    isMap,
+    isSymbol
+} from './type';

@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig, AxiosResponse, AxiosError, Method } from 'axios';
 import Agent from 'agentkeepalive';
-import { type } from '../utils';
+import { isString } from '../utils';
 
 class Exception extends Error {
     private status: number;
@@ -99,7 +99,7 @@ class HTTP {
                 status,
                 httpInfo: statusText,
                 // eslint-disable-next-line prettier/prettier
-                ...type(data) === 'string' ? { error: { info: data } } : data
+                ...isString(data) ? { error: { info: data } } : data
             };
         }
 

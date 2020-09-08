@@ -11,8 +11,8 @@ class API {
 
     public async test(body?: Record<string, unknown>): Promise<apiResult> {
         return HTTP.get('/tests/test/api', { data: body })
-            .then(async r => await this.successHandle(r))
-            .catch(async e => await this.errorHandle(e));
+            .then(r => this.successHandle(r))
+            .catch(e => this.errorHandle(e));
     }
 }
 

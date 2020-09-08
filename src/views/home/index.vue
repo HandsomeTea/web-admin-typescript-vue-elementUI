@@ -1,10 +1,10 @@
 <template>
     <el-main class="demo_style">
-        <!-- {{ $t('SUCCESS') }}
+        {{ $t('SUCCESS') }}
         {{ username }}
         <test></test>
         <p class="demo_style" @click="testApi">原data数据：{{ test }}</p>
-        language {{ language }} -->
+        language {{ language }}
         <div id="videoElement" class="video_test"></div>
     </el-main>
 </template>
