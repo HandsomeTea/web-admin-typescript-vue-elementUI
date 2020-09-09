@@ -34,6 +34,7 @@ module.exports = {
         ElLoadingComponent: true
     },
     rules: {
+        '@typescript-eslint/no-explicit-any': 0, // 是否允许声明any类型
         '@typescript-eslint/no-inferrable-types': 2, //类型推断
         'prettier/prettier': 'error',
         indent: [2, 4, { SwitchCase: 1 }], //缩进风格

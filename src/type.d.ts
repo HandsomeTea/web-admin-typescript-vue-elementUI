@@ -51,7 +51,7 @@ declare interface noticeOption {
 }
 
 declare interface apiResult {
-    data?: unknown;
+    data?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
     error?: httpException;
 }
 
