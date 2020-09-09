@@ -34,7 +34,7 @@ declare interface promptOption {
     inputType?: 'text' | 'textArea' | 'password' | 'number';
     inputInitValue?: string;
     inputPattern?: RegExp;
-    inputValidator?: function;
+    inputValidator?: (value: string) => boolean | string;
     inputErrorMessage?: string;
 }
 
@@ -46,8 +46,8 @@ declare interface loadingOption {
 declare interface noticeOption {
     type?: 'success' | 'info' | 'warning' | 'error';
     position?: 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left';
-    onClose?: function;
-    onClick?: function;
+    onClose?: () => void;
+    onClick?: () => void;
 }
 
 declare interface apiResult {

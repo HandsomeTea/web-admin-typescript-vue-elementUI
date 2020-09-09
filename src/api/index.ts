@@ -1,12 +1,18 @@
 import HTTP from './http';
 
-class API {
-    private errorHandle(error: httpException): Promise<apiResult> {
+class _Base {
+    public errorHandle(error: httpException): Promise<apiResult> {
         return Promise.resolve({ error });
     }
 
-    private successHandle(data: unknown): Promise<apiResult> {
+    public successHandle(data: unknown): Promise<apiResult> {
         return Promise.resolve({ data });
+    }
+}
+
+class Users extends _Base {
+    constructor() {
+        super();
     }
 
     public async test(body?: Record<string, unknown>): Promise<apiResult> {
@@ -16,4 +22,6 @@ class API {
     }
 }
 
-export default new API();
+export default {
+    User: new Users()
+};

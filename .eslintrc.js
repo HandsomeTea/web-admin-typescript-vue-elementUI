@@ -21,7 +21,17 @@ module.exports = {
     ],
     globals: {
         document: true,
-        window: true
+        window: true,
+        httpException: true,
+        httpArgument: true,
+        apiResult: true,
+        alertOption: true,
+        confirmOption: true,
+        promptOption: true,
+        loadingOption: true,
+        noticeOption: true,
+        ElNotificationComponent: true,
+        ElLoadingComponent: true
     },
     rules: {
         '@typescript-eslint/no-inferrable-types': 2, //类型推断
