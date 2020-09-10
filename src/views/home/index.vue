@@ -2,7 +2,7 @@
     <el-main class="demo_style">
         {{ $t('SUCCESS') }}
         {{ username }}
-        <test></test>
+        <test :value="'test prop value'"></test>
         <p class="demo_style" @click="testApi">原data数据：{{ test }}</p>
         language {{ language }}
         <div id="videoElement" class="video_test"></div>
