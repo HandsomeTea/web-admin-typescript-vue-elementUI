@@ -6,10 +6,13 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = merge(common, {
     mode: 'development',
-    devtool: 'inline-source-map',
+    devtool: 'eval-source-map',
     stats: 'minimal',
     output: {
         filename: 'javascript/[name].js'
+    },
+    performance: {
+        hints: 'warning'
     },
     plugins: [
         new webpack.DefinePlugin({
@@ -79,7 +82,7 @@ module.exports = merge(common, {
     },
     devServer: {
         contentBase: path.resolve(__dirname, '../dist'),
-        // compress: true,
+        compress: true,
         port: 9002,
         host: '0.0.0.0',
         index: 'index.html',

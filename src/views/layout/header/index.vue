@@ -7,13 +7,11 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
-import Title from './headerBreadcrumb.vue';
-import Options from './headerOption.vue';
 
 @Component({
     components: {
-        Title,
-        Options
+        Title: () => import(/* webpackChunkName: 'layout' */ './headerBreadcrumb.vue'),
+        Options: () => import(/* webpackChunkName: 'layout' */ './headerOption.vue')
     }
 })
 export default class Head extends Vue {}

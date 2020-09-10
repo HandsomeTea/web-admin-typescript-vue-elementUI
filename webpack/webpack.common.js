@@ -3,19 +3,23 @@ const webpack = require('webpack');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 // const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 module.exports = {
-    entry: {
-        app: path.resolve(__dirname, '../src/main.ts')
-    },
+    // entry: {
+    //     app: path.resolve(__dirname, '../src/main.ts')
+    // },
+    entry: path.resolve(__dirname, '../src/main.ts'),
     output: {
         path: path.resolve(__dirname, '../dist')
     },
+    target: 'web',
     plugins: [
         // new BundleAnalyzerPlugin(),
         new VueLoaderPlugin(),
         new CleanWebpackPlugin(),
+        new ForkTsCheckerWebpackPlugin(),
         new webpack.ProgressPlugin({
             entries: true,
             modules: true,
@@ -31,6 +35,7 @@ module.exports = {
         })
     ],
     optimization: {
+        runtimeChunk: 'single',
         splitChunks: {
             minSize: 0,
             maxInitialRequests: 4,
@@ -43,15 +48,16 @@ module.exports = {
                             module.resource.indexOf(path.join(__dirname, '../node_modules')) === 0
                         );
                     },
-                    name: 'vendor'
+                    name: 'vendor',
+                    chunks: 'all'
                 },
                 manifest: {
                     minChunks: Infinity
                 },
-                app: {
-                    chunks: 'async',
-                    minChunks: 3
-                },
+                // app: {
+                //     chunks: 'async',
+                //     minChunks: 3
+                // },
                 default: false,
                 vendors: false
             }
@@ -63,19 +69,24 @@ module.exports = {
             {
                 test: /\.js$/,
                 exclude: /node_modules/,
+                include: path.resolve(__dirname, '../src'),
                 use: 'babel-loader'
             },
             {
                 test: /\.vue$/,
                 exclude: /node_modules/,
+                include: path.resolve(__dirname, '../src'),
                 loader: 'vue-loader'
             },
             {
                 test: /\.(tsx|ts)$/,
+                include: path.resolve(__dirname, '../src'),
                 loader: 'ts-loader',
                 exclude: /node_modules/,
                 options: {
-                    appendTsSuffixTo: [/\.vue$/]
+                    appendTsSuffixTo: [/\.vue$/],
+                    transpileOnly: true,
+                    experimentalWatchApi: true
                 }
             }
         ]

@@ -18,15 +18,12 @@
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
 import { State } from 'vuex-class';
-import Menu from './menu.vue';
-import Logo from './logo.vue';
-import Header from './header/index.vue';
 
 @Component({
     components: {
-        Menu,
-        Logo,
-        Header
+        Menu: () => import(/* webpackChunkName: 'layout' */ './menu.vue'),
+        Logo: () => import(/* webpackChunkName: 'layout' */ './logo.vue'),
+        Header: () => import(/* webpackChunkName: 'layout' */ './header/index.vue')
     }
 })
 export default class Layout extends Vue {

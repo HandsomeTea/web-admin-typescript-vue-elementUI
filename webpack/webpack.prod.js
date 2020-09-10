@@ -5,15 +5,21 @@ const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CleanCSSPlugin = require('less-plugin-clean-css');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const CompressionPlugin = require('compression-webpack-plugin');
 
 module.exports = merge(common, {
     mode: 'production',
-    devtool: 'none',
+    devtool: 'source-map',
     stats: 'errors-only',
     output: {
         filename: 'javascript/[hash:20][id].js'
     },
     plugins: [
+        new webpack.LoaderOptionsPlugin({
+            options: {
+                productionGzip: true
+            }
+        }),
         new webpack.DefinePlugin({
             'process.env': {
                 NODE_ENV: JSON.stringify('production')
@@ -44,7 +50,15 @@ module.exports = merge(common, {
             },
             canPrint: true
         }),
-        new webpack.optimize.ModuleConcatenationPlugin()
+        new webpack.optimize.ModuleConcatenationPlugin(),
+        new CompressionPlugin({
+            algorithm: 'gzip',
+            filename: '[path].gz[query]',
+            test: /\.(js|css|html|svg)$/,
+            threshold: 8192,
+            deleteOriginalAssets: false,
+            include: path.resolve(__dirname, '../src')
+        })
     ],
     module: {
         rules: [
