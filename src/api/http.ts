@@ -110,7 +110,7 @@ class HTTP {
         return await axios.request({
             url,
             method,
-            baseURL: ['development', undefined].includes(process?.env?.NODE_ENV) ? undefined : 'https://xxx.xxx.cxx',
+            // baseURL: ['development', undefined].includes(process?.env?.NODE_ENV) ? undefined : 'https://xxx.xxx.cxx',
             headers: options.headers,
             params: { ...options.params },
             data: { ...options.data }
