@@ -1,8 +1,4 @@
-const typeIs = (data: unknown): string =>
-    toString
-        .call(data)
-        .replace(/object|\[|]|\s/g, '')
-        .toLowerCase();
+const typeIs = (data: unknown): string => toString.call(data).replace(/object|\[|]|\s/g, '').toLowerCase();
 
 export { typeIs };
 export const isString = (data: unknown): boolean => typeIs(data) === 'string';

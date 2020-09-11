@@ -69,9 +69,7 @@ class UITool {
             closeOnClickModal: false,
             closeOnPressEscape: false,
             showInput: false
-        })
-            .then(() => true)
-            .catch(() => false);
+        }).then(() => true).catch(() => false);
     }
 
     public async prompt(message: string, title: string, option?: promptOption): Promise<string | false> {
@@ -90,15 +88,13 @@ class UITool {
             inputPattern: option?.inputPattern || /.*/,
             inputValidator: option?.inputValidator,
             inputErrorMessage: this.t(option?.inputErrorMessage || 'it_is_illegal')
-        })
-            .then((data: MessageBoxData) => {
-                if (data === 'cancel' || data === 'close' || data === 'confirm') {
-                    return false;
-                } else {
-                    return data.value;
-                }
-            })
-            .catch(() => false);
+        }).then((data: MessageBoxData) => {
+            if (data === 'cancel' || data === 'close' || data === 'confirm') {
+                return false;
+            } else {
+                return data.value;
+            }
+        }).catch(() => false);
     }
 
     public loading(option?: loadingOption): ElLoadingComponent {

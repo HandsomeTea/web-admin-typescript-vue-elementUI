@@ -16,9 +16,7 @@ class Users extends _Base {
     }
 
     public async test(body?: Record<string, unknown>): Promise<apiResult> {
-        return HTTP.get('/tests/test/api', { data: body })
-            .then(r => this.successHandle(r))
-            .catch(e => this.errorHandle(e));
+        return HTTP.get('/tests/test/api', { data: body }).then(r => this.successHandle(r)).catch(e => this.errorHandle(e));
     }
 }
 
