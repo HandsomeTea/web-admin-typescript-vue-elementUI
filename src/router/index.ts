@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import VueRouter, { RouteConfig, Route } from 'vue-router';
+import VueRouter, { RouteConfig, Route, NavigationGuardNext } from 'vue-router';
 
 Vue.use(VueRouter);
 
@@ -22,7 +22,7 @@ const route = new VueRouter({
 
 /** 全局导航守卫 */
 /* 前置导航守卫 */
-route.beforeEach((to: Route, from: Route, next) => {
+route.beforeEach((to: Route, from: Route, next: NavigationGuardNext) => {
     // do something before next route
     next();
 });
