@@ -11,7 +11,7 @@ module.exports = {
     arrowParens: 'avoid',
     htmlWhitespaceSensitivity: 'ignore',
     trailingComma: 'none',
-    endOfLine: 'auto',
+    endOfLine: 'auto'
 };
 
 //  "vetur.format.defaultFormatter.html": "prettier",

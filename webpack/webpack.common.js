@@ -62,7 +62,8 @@ module.exports = {
             name: true,
             cacheGroups: {
                 ...catchPackagesGrouped(),
-                vendor: { //除了vendorPackage包含的之外，其他的比较大的依赖包
+                vendor: {
+                    //除了vendorPackage包含的之外，其他的比较大的依赖包
                     test: module => {
                         let notIncludeVendor = false;
                         const conditionBase = module.resource && /\.js$/.test(module.resource);
