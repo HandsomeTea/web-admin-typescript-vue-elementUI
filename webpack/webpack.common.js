@@ -9,19 +9,13 @@ const vendorPackage = ['axios', 'dplayer', 'vue', 'vue-i18n', 'vue-router', 'vue
 const catchPackagesGrouped = () => {
     const result = {};
 
-    vendorPackage.map((package, i) => {
+    vendorPackage.map(package => {
         result[package] = {
-            test: module => {
-                return (
-                    module.resource &&
-                    /\.js$/.test(module.resource) &&
-                    module.resource.includes(path.join(__dirname, `../node_modules/${package}/`))
-                );
-            },
+            test: module => module.resource && /\.js$/.test(module.resource) && module.resource.includes(path.join(__dirname, `../node_modules/${package}/`)),
             name: package,
             chunks: 'all',
             priority: -10
-        }
+        };
     });
 
     return result;
@@ -71,19 +65,17 @@ module.exports = {
                 vendor: { //除了vendorPackage包含的之外，其他的比较大的依赖包
                     test: module => {
                         let notIncludeVendor = false;
+                        const conditionBase = module.resource && /\.js$/.test(module.resource);
+
                         vendorPackage.map(package => {
-                            if (module.resource && /\.js$/.test(module.resource) && module.resource.includes(path.join(__dirname, `../node_modules/${package}/`))) {
+                            if (conditionBase && module.resource.includes(path.join(__dirname, `../node_modules/${package}/`))) {
                                 notIncludeVendor = true;
                             }
                         });
-                        return (
-                            module.resource &&
-                            /\.js$/.test(module.resource) &&
-                            module.resource.includes(path.join(__dirname, '../node_modules/')) && !notIncludeVendor
-                        );
+                        return conditionBase && module.resource.includes(path.join(__dirname, '../node_modules/')) && !notIncludeVendor;
                     },
                     name: 'vendor',
-                    chunks: 'all',
+                    chunks: 'all'
                 },
                 manifest: {
                     minChunks: Infinity
