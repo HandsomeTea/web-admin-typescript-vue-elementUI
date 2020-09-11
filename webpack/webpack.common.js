@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 const path = require('path');
 const webpack = require('webpack');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
@@ -91,31 +92,27 @@ module.exports = {
         minimize: true
     },
     module: {
-        rules: [
-            {
-                test: /\.js$/,
-                exclude: /node_modules/,
-                include: path.resolve(__dirname, '../src'),
-                use: 'babel-loader'
-            },
-            {
-                test: /\.vue$/,
-                exclude: /node_modules/,
-                include: path.resolve(__dirname, '../src'),
-                loader: 'vue-loader'
-            },
-            {
-                test: /\.(tsx|ts)$/,
-                include: path.resolve(__dirname, '../src'),
-                loader: 'ts-loader',
-                exclude: /node_modules/,
-                options: {
-                    appendTsSuffixTo: [/\.vue$/],
-                    transpileOnly: true,
-                    experimentalWatchApi: true
-                }
+        rules: [{
+            test: /\.js$/,
+            exclude: /node_modules/,
+            include: path.resolve(__dirname, '../src'),
+            use: 'babel-loader'
+        }, {
+            test: /\.vue$/,
+            exclude: /node_modules/,
+            include: path.resolve(__dirname, '../src'),
+            loader: 'vue-loader'
+        }, {
+            test: /\.(tsx|ts)$/,
+            include: path.resolve(__dirname, '../src'),
+            loader: 'ts-loader',
+            exclude: /node_modules/,
+            options: {
+                appendTsSuffixTo: [/\.vue$/],
+                transpileOnly: true,
+                experimentalWatchApi: true
             }
-        ]
+        }]
     },
     resolve: {
         alias: {

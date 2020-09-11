@@ -16,13 +16,13 @@ const store: StoreOptions<RootState> = {
     },
     state,
     mutations: {
-        _toogleSideShrink(state) {
+        _toogleSideShrink(state: RootState) {
             state.menuHidden = !state.menuHidden;
         },
-        _login(state) {
+        _login(state: RootState) {
             state.loginStatus = true;
         },
-        _logout(state) {
+        _logout(state: RootState) {
             state.loginStatus = false;
         },
         _setLanguage(state: RootState, language: string) {

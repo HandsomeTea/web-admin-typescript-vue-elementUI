@@ -15,7 +15,7 @@ import { State, Action } from 'vuex-class';
 import { RootState, UserState, setLanguageAction } from '../../store/stateModel';
 import API from '../../api';
 import eleUITools from '../../ui-frame/elementui/UI-tool';
-import DPlayer from 'dplayer';
+// import DPlayer from 'dplayer';
 
 // 相当于原来vue的components属性
 @Component({
@@ -50,7 +50,7 @@ export default class Hoom extends Vue {
      * 相当于原vue中data数据
      */
     private test = 'string-data';
-    private video: DPlayer;
+    // private video: DPlayer;
 
     //相当于原vue中的watch
     @Watch('username', { immediate: true, deep: true })

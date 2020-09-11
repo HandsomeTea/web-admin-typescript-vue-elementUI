@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 const path = require('path');
 const webpack = require('webpack');
 const { merge } = require('webpack-merge');
@@ -31,54 +32,43 @@ module.exports = merge(common, {
         minimize: false
     },
     module: {
-        rules: [
-            {
-                test: /\.(png|svg|jpg|jpeg|gif|woff|woff2|eot|ttf|otf|ico|pub)$/i,
-                use: [
-                    {
-                        loader: 'file-loader',
-                        options: {
-                            outputPath: 'images',
-                            publicPath: '../images',
-                            name: '[name].[ext]'
-                        }
+        rules: [{
+            test: /\.(png|svg|jpg|jpeg|gif|woff|woff2|eot|ttf|otf|ico|pub)$/i,
+            use: [{
+                loader: 'file-loader',
+                options: {
+                    outputPath: 'images',
+                    publicPath: '../images',
+                    name: '[name].[ext]'
+                }
+            }]
+        }, {
+            test: /\.(css|less)$/,
+            use: [{
+                loader: MiniCssExtractPlugin.loader,
+                options: {
+                    publicPath: path.resolve(__dirname, '../dist'),
+                    hmr: process.env.NODE_ENV === 'development'
+                }
+            }, {
+                loader: 'css-loader'
+            }, {
+                loader: 'postcss-loader'
+            }, {
+                loader: 'less-loader',
+                options: {
+                    lessOptions: {
+                        strictMath: true,
+                        noIeCompat: true
                     }
-                ]
-            },
-            {
-                test: /\.(css|less)$/,
-                use: [
-                    {
-                        loader: MiniCssExtractPlugin.loader,
-                        options: {
-                            publicPath: path.resolve(__dirname, '../dist'),
-                            hmr: process.env.NODE_ENV === 'development'
-                        }
-                    },
-                    {
-                        loader: 'css-loader'
-                    },
-                    {
-                        loader: 'postcss-loader'
-                    },
-                    {
-                        loader: 'less-loader',
-                        options: {
-                            lessOptions: {
-                                strictMath: true,
-                                noIeCompat: true
-                            }
-                        }
-                    },
-                    {
-                        loader: 'style-resources-loader',
-                        options: {
-                            patterns: [path.resolve(__dirname, '../src/assets/css/base/global.less')]
-                        }
-                    }
-                ]
-            }
-        ]
+                }
+            }, {
+                loader: 'style-resources-loader',
+                options: {
+                    patterns: [path.resolve(__dirname, '../src/assets/css/base/global.less')]
+                }
+            }]
+        }]
     },
     devServer: {
         contentBase: path.resolve(__dirname, '../dist'),

@@ -14,7 +14,7 @@ export default class Hoom extends Vue {
     @Prop({
         type: String, // 父组件传递给子组件的数据类型
         required: false, // 是否必填
-        default: ' ' // 默认值， 如果传入的是 Object，则要 default: ()=>({}) 参数为函数
+        default: '' // 默认值， 如果传入的是 Object，则要 default: ()=>({}) 参数为函数
     })
     value!: string;
 

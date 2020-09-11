@@ -54,11 +54,3 @@ declare interface apiResult {
     data?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
     error?: httpException;
 }
-
-declare interface ElLoadingComponent {
-    close(): void;
-}
-
-declare interface ElNotificationComponent {
-    close(): void;
-}

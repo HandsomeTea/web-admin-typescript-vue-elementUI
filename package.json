@@ -34,13 +34,11 @@
     "not ie <= 8"
   ],
   "devDependencies": {
-    "@babel/core": "^7.11.1",
-    "@babel/preset-env": "^7.11.0",
-    "@types/dplayer": "^1.25.0",
+    "@babel/core": "^7.11.6",
+    "@babel/preset-env": "^7.11.5",
     "@typescript-eslint/eslint-plugin": "^4.1.0",
     "@typescript-eslint/parser": "^4.1.0",
-    "@vue/eslint-config-prettier": "^6.0.0",
-    "@vue/eslint-config-typescript": "^5.0.2",
+    "@vue/eslint-config-typescript": "^5.1.0",
     "babel-loader": "^8.1.0",
     "babel-plugin-component": "^1.1.1",
     "babel-plugin-syntax-dynamic-import": "^6.18.0",
@@ -49,7 +47,6 @@
     "compression-webpack-plugin": "^5.0.2",
     "css-loader": "^4.2.1",
     "eslint": "^7.7.0",
-    "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-vue": "^6.2.2",
     "file-loader": "^6.0.0",
     "fork-ts-checker-webpack-plugin": "^5.1.0",
@@ -82,7 +79,6 @@
   "dependencies": {
     "agentkeepalive": "^4.1.3",
     "axios": "^0.20.0",
-    "dplayer": "^1.26.0",
     "element-ui": "^2.13.2",
     "vue": "^2.6.12",
     "vue-i18n": "^8.21.0",

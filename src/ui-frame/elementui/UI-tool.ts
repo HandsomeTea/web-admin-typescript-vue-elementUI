@@ -1,4 +1,11 @@
 import { Message, MessageBox, Loading, Notification } from 'element-ui';
+import { MessageBoxData } from 'element-ui/types/message-box';
+import { ElNotificationComponent } from 'element-ui/types/notification';
+import { ElLoadingComponent } from 'element-ui/types/loading';
+import 'element-ui/lib/theme-chalk/message.css';
+import 'element-ui/lib/theme-chalk/message-box.css';
+import 'element-ui/lib/theme-chalk/loading.css';
+import 'element-ui/lib/theme-chalk/notification.css';
 import i18n from '../../lang';
 
 interface closeNotificationFn {
@@ -84,7 +91,7 @@ class UITool {
             inputValidator: option?.inputValidator,
             inputErrorMessage: this.t(option?.inputErrorMessage || 'it_is_illegal')
         })
-            .then(data => {
+            .then((data: MessageBoxData) => {
                 if (data === 'cancel' || data === 'close' || data === 'confirm') {
                     return false;
                 } else {

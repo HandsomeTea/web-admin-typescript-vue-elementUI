@@ -11,7 +11,22 @@ import {
     Breadcrumb,
     BreadcrumbItem
 } from 'element-ui';
-import 'element-ui/lib/theme-chalk/index.css';
+
+// 使用到的组件的样式
+import 'element-ui/lib/theme-chalk/container.css';
+import 'element-ui/lib/theme-chalk/header.css';
+import 'element-ui/lib/theme-chalk/aside.css';
+import 'element-ui/lib/theme-chalk/main.css';
+import 'element-ui/lib/theme-chalk/menu.css';
+import 'element-ui/lib/theme-chalk/menu-item.css';
+import 'element-ui/lib/theme-chalk/menu-item-group.css';
+import 'element-ui/lib/theme-chalk/submenu.css';
+import 'element-ui/lib/theme-chalk/breadcrumb.css';
+import 'element-ui/lib/theme-chalk/breadcrumb-item.css';
+
+// 文字图标
+import 'element-ui/lib/theme-chalk/icon.css';
+
 import CollapseTransition from 'element-ui/lib/transitions/collapse-transition';
 
 // 引入动画

@@ -98,7 +98,6 @@ class HTTP {
             errorResult = {
                 status,
                 httpInfo: statusText,
-                // eslint-disable-next-line prettier/prettier
                 ...isString(data) ? { error: { info: data } } : data
             };
         }
