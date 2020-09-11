@@ -5,6 +5,27 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 // const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+const vendorPackage = ['axios', 'dplayer', 'vue', 'vue-i18n', 'vue-router', 'vuex', 'element-ui'];
+const catchPackagesGrouped = () => {
+    const result = {};
+
+    vendorPackage.map((package, i) => {
+        result[package] = {
+            test: module => {
+                return (
+                    module.resource &&
+                    /\.js$/.test(module.resource) &&
+                    module.resource.includes(path.join(__dirname, `../node_modules/${package}/`))
+                );
+            },
+            name: package,
+            chunks: 'all',
+            priority: -10
+        }
+    });
+
+    return result;
+};
 
 module.exports = {
     // entry: {
@@ -37,29 +58,41 @@ module.exports = {
     optimization: {
         runtimeChunk: 'single',
         splitChunks: {
-            minSize: 0,
-            maxInitialRequests: 4,
+            chunks: 'async',
+            minSize: 30000,
+            maxSize: 0,
+            minChunks: 1,
+            maxAsyncRequests: 5,
+            maxInitialRequests: 6,
+            automaticNameDelimiter: '~',
+            name: true,
             cacheGroups: {
-                vendor: {
+                ...catchPackagesGrouped(),
+                vendor: { //除了vendorPackage包含的之外，其他的比较大的依赖包
                     test: module => {
+                        let notIncludeVendor = false;
+                        vendorPackage.map(package => {
+                            if (module.resource && /\.js$/.test(module.resource) && module.resource.includes(path.join(__dirname, `../node_modules/${package}/`))) {
+                                notIncludeVendor = true;
+                            }
+                        });
                         return (
                             module.resource &&
                             /\.js$/.test(module.resource) &&
-                            module.resource.indexOf(path.join(__dirname, '../node_modules')) === 0
+                            module.resource.includes(path.join(__dirname, '../node_modules/')) && !notIncludeVendor
                         );
                     },
                     name: 'vendor',
-                    chunks: 'all'
+                    chunks: 'all',
                 },
                 manifest: {
                     minChunks: Infinity
                 },
-                // app: {
-                //     chunks: 'async',
-                //     minChunks: 3
-                // },
-                default: false,
-                vendors: false
+                default: {
+                    minChunks: 3,
+                    priority: -20,
+                    reuseExistingChunk: true
+                }
             }
         },
         minimize: true
