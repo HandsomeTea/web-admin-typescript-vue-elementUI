@@ -14,6 +14,7 @@ module.exports = merge(common, {
     stats: 'errors-only',
     output: {
         filename: 'javascript/[hash:20][id].js'
+        // filename: 'javascript/[name].js'
     },
     plugins: [
         new webpack.LoaderOptionsPlugin({

@@ -27,9 +27,8 @@ import 'element-ui/lib/theme-chalk/breadcrumb-item.css';
 // 文字图标
 import 'element-ui/lib/theme-chalk/icon.css';
 
-import CollapseTransition from 'element-ui/lib/transitions/collapse-transition';
-
 // 引入动画
+import CollapseTransition from 'element-ui/lib/transitions/collapse-transition';
 Vue.component(CollapseTransition.name, CollapseTransition);
 
 // 引入组件
