@@ -163,7 +163,7 @@ export default class Hoom extends Vue {
 
 <style lang="less" scoped>
 .demo_style {
-    color: @system_theme_color;
+    color: @theme_color;
 }
 .video_test {
     width: 1000px;

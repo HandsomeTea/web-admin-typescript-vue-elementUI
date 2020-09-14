@@ -74,7 +74,7 @@ export default class Menu extends Vue {
 }
 
 .layout_menu::-webkit-scrollbar-thumb {
-    background: @system_theme_color;
+    background: @theme_color;
 }
 
 .layout_menu::-webkit-scrollbar-track {
