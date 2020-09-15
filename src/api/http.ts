@@ -83,12 +83,12 @@ class HTTP {
 
     private async _receiveResponseNotSuccess(error: AxiosError): Promise<httpException> {
         // const { message, name, description, number, fileName, lineNumber, columnNumber, stack, code } = error.toJSON();
-        const { response, config /*, request */ } = error;
-        const { baseURL /*, url, method*/ } = config;
+        const { response, config, request: { responseURL } } = error;
+        // const { url, baseURL, method } = config;
 
         let errorResult: httpException = {
             status: 500,
-            httpInfo: ` 访问 ${baseURL} 失败`,
+            httpInfo: ` 访问 ${config ? config.baseURL : responseURL} 失败`,
             error: { info: '' }
         };
 
