@@ -7,7 +7,7 @@ Vue.use(Vuex);
 
 const state: RootState = {
     loginStatus: false,
-    language: 'zh',
+    language: (window.navigator.language || 'zh').toLowerCase().split('-')[0],
     menuHidden: false
 };
 const store: StoreOptions<RootState> = {

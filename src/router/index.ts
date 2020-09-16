@@ -3,7 +3,7 @@ import VueRouter, { RouteConfig, Route, NavigationGuardNext } from 'vue-router';
 
 Vue.use(VueRouter);
 
-const routes: RouteConfig[] = [{
+const routes: Array<RouteConfig> = [{
     path: '/',
     redirect: '/index',
     component: () => import(/* webpackChunkName: 'layout' */ '../views/layout/index.vue'),
@@ -20,7 +20,10 @@ const route = new VueRouter({
     routes
 });
 
-/** 全局导航守卫 */
+/**
+ * 全局导航守卫
+ */
+
 /* 前置导航守卫 */
 route.beforeEach((to: Route, from: Route, next: NavigationGuardNext) => {
     // do something before next route

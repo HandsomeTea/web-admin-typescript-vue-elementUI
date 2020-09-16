@@ -7,6 +7,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CleanCSSPlugin = require('less-plugin-clean-css');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
+// const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = merge(common, {
     mode: 'production',
@@ -61,6 +62,11 @@ module.exports = merge(common, {
             deleteOriginalAssets: false,
             include: path.resolve(__dirname, '../src')
         })
+        // // 将静态内容(如文档等)复制到build结果中
+        // new CopyPlugin({
+        //     patterns: [{ from: path.resolve(__dirname, '../src/views/docs'), to: path.resolve(__dirname, '../dist/docs') }],
+        //     options: {}
+        // })
     ],
     module: {
         rules: [{
