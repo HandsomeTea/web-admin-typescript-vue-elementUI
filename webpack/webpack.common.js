@@ -5,7 +5,6 @@ const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
-// const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const vendorPackage = ['axios', 'dplayer', 'vue', 'vue-i18n', 'vue-router', 'vuex', 'element-ui'];
 const catchPackagesGrouped = () => {
     const result = {};
@@ -32,7 +31,6 @@ module.exports = {
     },
     target: 'web',
     plugins: [
-        // new BundleAnalyzerPlugin(),
         new VueLoaderPlugin(),
         new CleanWebpackPlugin(),
         new ForkTsCheckerWebpackPlugin(),

@@ -37,6 +37,7 @@ module.exports = merge(common, {
             use: [{
                 loader: 'file-loader',
                 options: {
+                    esModule: false,
                     outputPath: 'images',
                     publicPath: '../images',
                     name: '[name].[ext]'
@@ -65,7 +66,7 @@ module.exports = merge(common, {
             }, {
                 loader: 'style-resources-loader',
                 options: {
-                    patterns: [path.resolve(__dirname, '../src/assets/css/base/global.less')]
+                    patterns: [path.resolve(__dirname, '../src/assets/css/global-var.less')]
                 }
             }]
         }]
@@ -85,13 +86,16 @@ module.exports = merge(common, {
         // noInfo: true,
         open: true,
         overlay: true, //编译运行时的错误直接显示在浏览器
-        proxy: [
-            {
-                context: ['/tests'],
-                target: 'http://localhost:3000',
-                secure: false
-            }
-        ],
+        proxy: [{
+            context: ['/tests'],
+            target: 'http://localhost:3000',
+            secure: false
+        }, {
+            context: () => true,
+            target: 'https://surpass-dev.bizconf.cn/',
+            secure: false,
+            changeOrigin: true
+        }],
         // quiet: false,
         useLocalIp: true
     }

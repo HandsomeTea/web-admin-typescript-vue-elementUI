@@ -7,6 +7,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CleanCSSPlugin = require('less-plugin-clean-css');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 // const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = merge(common, {
@@ -18,6 +19,7 @@ module.exports = merge(common, {
         // filename: 'javascript/[name].js'
     },
     plugins: [
+        new BundleAnalyzerPlugin(),
         new webpack.LoaderOptionsPlugin({
             options: {
                 productionGzip: true
@@ -74,6 +76,7 @@ module.exports = merge(common, {
             use: [{
                 loader: 'file-loader',
                 options: {
+                    esModule: false,
                     outputPath: 'image',
                     publicPath: '../image',
                     name: '[hash:20].[ext]'
@@ -108,7 +111,7 @@ module.exports = merge(common, {
             }, {
                 loader: 'style-resources-loader',
                 options: {
-                    patterns: [path.resolve(__dirname, '../src/assets/css/base/global.less')]
+                    patterns: [path.resolve(__dirname, '../src/assets/css/global-var.less')]
                 }
             }]
         }]

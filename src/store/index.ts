@@ -8,7 +8,8 @@ Vue.use(Vuex);
 const state: RootState = {
     loginStatus: false,
     language: (window.navigator.language || 'zh').toLowerCase().split('-')[0],
-    menuHidden: false
+    menuHidden: false,
+    screenType: ''
 };
 const store: StoreOptions<RootState> = {
     modules: {
@@ -29,6 +30,11 @@ const store: StoreOptions<RootState> = {
             if (state.language !== language) {
                 state.language = language;
             }
+        },
+        _setScreenType(state: RootState, type: 'phone' | 'ipad' | 'spc' | 'pc' | '') {
+            if (state.screenType !== type) {
+                state.screenType = type;
+            }
         }
     },
     actions: {
@@ -43,6 +49,19 @@ const store: StoreOptions<RootState> = {
         },
         setLanguage({ commit }, language: string) {
             commit('_setLanguage', language);
+        },
+        setScreenType({ commit }) {
+            const size = document.body.offsetWidth;
+
+            if (size <= 767) {
+                commit('_setScreenType', 'phone');
+            } else if (size > 1200) {
+                commit('_setScreenType', 'pc');
+            } else if (size > 992) {
+                commit('_setScreenType', 'spc');
+            } else if (size > 768) {
+                commit('_setScreenType', 'ipad');
+            }
         }
     },
     getters: {}

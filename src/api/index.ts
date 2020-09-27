@@ -10,7 +10,7 @@ class _Base {
     }
 }
 
-class Users extends _Base {
+class Accounts extends _Base {
     constructor() {
         super();
     }
@@ -21,5 +21,5 @@ class Users extends _Base {
 }
 
 export default {
-    User: new Users()
+    Account: new Accounts()
 };

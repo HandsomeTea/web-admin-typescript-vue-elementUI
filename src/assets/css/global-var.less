@@ -1,3 +1,9 @@
+/**
+ * 这里引入全局的变量及变量样式块，
+ * 全局的不含变量的样式不建议在这引入，直接在全局引入更好
+ * 该文件在webpack的配置文件做了全局的引入，只为引入全局定义的less变量和变量样式块
+ */
+
 /*通用样式*/
 @theme_color: #409EFF;
 /*界面布局*/
@@ -32,10 +38,4 @@
 
 .no_trans() {
     transition: all 0s;
-}
-
-.dplayer-menu-item:nth-last-child(1),
-.dplayer-menu-item:nth-last-child(2),
-.dplayer-menu-item:nth-last-child(3) {
-    display: none;
 }

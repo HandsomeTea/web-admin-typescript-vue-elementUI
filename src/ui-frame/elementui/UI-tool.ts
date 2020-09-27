@@ -1,7 +1,7 @@
 import { Message, MessageBox, Loading, Notification } from 'element-ui';
-import { MessageBoxData } from 'element-ui/types/message-box';
-import { ElNotificationComponent } from 'element-ui/types/notification';
-import { ElLoadingComponent } from 'element-ui/types/loading';
+import { ElNotificationComponent, ElNotificationOptions } from 'element-ui/types/notification';
+import { ElLoadingComponent, LoadingServiceOptions } from 'element-ui/types/loading';
+import { ElMessageBoxOptions, MessageBoxData } from 'element-ui/types/message-box';
 import 'element-ui/lib/theme-chalk/message.css';
 import 'element-ui/lib/theme-chalk/message-box.css';
 import 'element-ui/lib/theme-chalk/loading.css';
@@ -10,7 +10,6 @@ import i18n from '../../lang';
 
 interface closeNotificationFn {
     (): void;
-    //左边表示函数的输入类型，右边表示输出类型
 }
 
 class UITool {
@@ -47,8 +46,9 @@ class UITool {
         });
     }
 
-    public async alert(message: string, title: string, option?: alertOption): Promise<true> {
+    public async alert(message: string, title: string, option?: ElMessageBoxOptions): Promise<true> {
         return await MessageBox.alert(this.t(message), this.t(title), {
+            ...option,
             confirmButtonText: this.t(option?.confirmButtonText || 'yes'),
             type: option?.type || 'info',
             showClose: false,
@@ -59,8 +59,9 @@ class UITool {
         }).then(() => true);
     }
 
-    public async confirm(message: string, title: string, option?: confirmOption): Promise<boolean> {
+    public async confirm(message: string, title: string, option?: ElMessageBoxOptions): Promise<boolean> {
         return await MessageBox.alert(this.t(message), this.t(title), {
+            ...option,
             confirmButtonText: this.t(option?.confirmButtonText || 'yes'),
             cancelButtonText: this.t(option?.cancelButtonText || 'cancel'),
             type: option?.type || 'info',
@@ -72,8 +73,9 @@ class UITool {
         }).then(() => true).catch(() => false);
     }
 
-    public async prompt(message: string, title: string, option?: promptOption): Promise<string | false> {
+    public async prompt(message: string, title: string, option?: ElMessageBoxOptions): Promise<string | false> {
         return await MessageBox.alert(this.t(message), this.t(title), {
+            ...option,
             confirmButtonText: this.t(option?.confirmButtonText || 'yes'),
             cancelButtonText: this.t(option?.cancelButtonText || 'cancel'),
             type: 'info',
@@ -82,11 +84,6 @@ class UITool {
             closeOnClickModal: false,
             closeOnPressEscape: false,
             showInput: true,
-            inputPlaceholder: this.t(option?.inputPlaceholder || ''),
-            inputType: option?.inputType || 'text',
-            inputValue: this.t(option?.inputInitValue || ''),
-            inputPattern: option?.inputPattern || /.*/,
-            inputValidator: option?.inputValidator,
             inputErrorMessage: this.t(option?.inputErrorMessage || 'it_is_illegal')
         }).then((data: MessageBoxData) => {
             if (data === 'cancel' || data === 'close' || data === 'confirm') {
@@ -97,42 +94,29 @@ class UITool {
         }).catch(() => false);
     }
 
-    public loading(option?: loadingOption): ElLoadingComponent {
+    public loading(option?: LoadingServiceOptions, text?: string): ElLoadingComponent {
         return Loading.service({
-            text: this.t(option?.text || ''),
-            target: option?.target || 'body',
-            lock: true
+            ...option,
+            text: this.t(text || '')
         });
     }
 
-    public noticing(title: string, message: string, option?: noticeOption): ElNotificationComponent {
+    public noticing(title: string, message: string, option?: ElNotificationOptions): ElNotificationComponent {
         const noticing = Notification({
+            ...option,
             title: this.t(title),
-            message: this.t(message),
-            type: option?.type || 'info',
-            position: option?.position || 'top-right',
-            onClose: option?.onClose,
-            onClick: option?.onClick,
-            showClose: true,
-            duration: 0,
-            offset: 0
+            message: this.t(message)
         });
 
         this.allNoticing.add(noticing.close);
         return noticing;
     }
 
-    public noticed(title: string, message: string, option?: noticeOption): ElNotificationComponent {
+    public noticed(title: string, message: string, option?: ElNotificationOptions): ElNotificationComponent {
         const noticed = Notification({
+            ...option,
             title: this.t(title),
-            message: this.t(message),
-            type: option?.type || 'info',
-            position: option?.position || 'top-right',
-            onClose: option?.onClose,
-            onClick: option?.onClick,
-            showClose: false,
-            duration: 4500,
-            offset: 0
+            message: this.t(message)
         });
 
         this.allNoticing.add(noticed.close);

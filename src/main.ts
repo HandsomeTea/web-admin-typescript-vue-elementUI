@@ -34,6 +34,24 @@ new Vue({
             }
         }
     },
+    mounted() {
+        let waitForResizeEndTimer: null | number = null;
+
+        window.onresize = () => {
+            const waitTime = 800;
+
+            if (waitForResizeEndTimer === null) {
+                waitForResizeEndTimer = window.setTimeout(() => {
+                    // store.dispatch('setScreenType');
+                }, waitTime);
+            } else {
+                clearTimeout(waitForResizeEndTimer);
+                waitForResizeEndTimer = window.setTimeout(() => {
+                    // store.dispatch('setScreenType');
+                }, waitTime);
+            }
+        };
+    },
     computed: {
         lang() {
             return store.state.language;
