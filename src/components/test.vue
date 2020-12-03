@@ -7,7 +7,7 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator';
-import eleUITools from '../ui-frame/elementui/UI-tool';
+import eleUITools from '../ui-frame/ui-tips';
 
 @Component
 export default class Hoom extends Vue {

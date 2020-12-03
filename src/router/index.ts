@@ -17,6 +17,7 @@ const routes: Array<RouteConfig> = [{
 }];
 
 const route = new VueRouter({
+    mode: process?.env?.NODE_ENV === 'development' ? 'hash' : 'history',
     routes
 });
 

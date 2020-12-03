@@ -1,3 +1,10 @@
+import isUrl from './isUrl';
+import isPhone from './isPhone';
+import isEmail from './isEmail';
+
+export { isUrl };
+export { isPhone };
+export { isEmail };
 export {
     typeIs,
     isString,

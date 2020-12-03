@@ -8,6 +8,7 @@ const CleanCSSPlugin = require('less-plugin-clean-css');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+const isTestBuild = process.argv.includes('-build-test');
 // const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = merge(common, {
@@ -19,7 +20,7 @@ module.exports = merge(common, {
         // filename: 'javascript/[name].js'
     },
     plugins: [
-        new BundleAnalyzerPlugin(),
+        ...isTestBuild ? [new BundleAnalyzerPlugin()] : [],
         new webpack.LoaderOptionsPlugin({
             options: {
                 productionGzip: true
@@ -44,14 +45,11 @@ module.exports = merge(common, {
             assetNameRegExp: /\.css$/g,
             cssProcessor: require('cssnano'),
             cssProcessorPluginOptions: {
-                preset: [
-                    'default',
-                    {
-                        discardComments: {
-                            removeAll: true
-                        }
+                preset: ['default', {
+                    discardComments: {
+                        removeAll: true
                     }
-                ]
+                }]
             },
             canPrint: true
         }),

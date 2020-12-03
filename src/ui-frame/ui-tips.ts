@@ -6,7 +6,7 @@ import 'element-ui/lib/theme-chalk/message.css';
 import 'element-ui/lib/theme-chalk/message-box.css';
 import 'element-ui/lib/theme-chalk/loading.css';
 import 'element-ui/lib/theme-chalk/notification.css';
-import i18n from '../../lang';
+import i18n from '../lang';
 
 interface closeNotificationFn {
     (): void;

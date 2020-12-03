@@ -14,7 +14,7 @@ import { Vue, Component, Watch } from 'vue-property-decorator';
 import { State, Action } from 'vuex-class';
 import { RootState, UserState, setLanguageAction } from '../../store/stateModel';
 import API from '../../api';
-import eleUITools from '../../ui-frame/elementui/UI-tool';
+import eleUITools from '../../ui-frame/ui-tips';
 // import DPlayer from 'dplayer';
 
 // 相当于原来vue的components属性
@@ -147,7 +147,7 @@ export default class Hoom extends Vue {
     private async testApi(): Promise<void | boolean> {
         // console.log(this.$t('FAILED'));
         console.log(123); /* eslint-disable-line no-console */
-        const { error, data } = await API.User.test({ 'test-body': '中文测试' });
+        const { error, data } = await API.Account.test({ 'test-body': '中文测试' });
 
         if (error) {
             // throw error.type || 'USER_SAVE_FAILED';

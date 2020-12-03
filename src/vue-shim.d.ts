@@ -7,3 +7,5 @@ declare module 'dplayer' {
     import Dplayer from 'dplayer/index';
     export default Dplayer;
 }
+
+declare module '*.png';

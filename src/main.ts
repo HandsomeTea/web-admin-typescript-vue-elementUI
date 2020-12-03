@@ -5,7 +5,7 @@ import store from './store';
 import router from './router';
 import i18n from './lang';
 import view from './views/index.vue';
-import eleUITools from './ui-frame/elementui/UI-tool';
+import eleUITools from './ui-frame/ui-tips';
 import './ui-frame';
 import './assets';
 Vue.config.productionTip = false;
@@ -29,8 +29,8 @@ new Vue({
             }
         },
         lang() {
-            if (i18n.locale !== this.lang) {
-                i18n.locale = this.lang;
+            if (this.$i18n.locale !== this.lang) {
+                this.$i18n.locale = this.lang;
             }
         }
     },
