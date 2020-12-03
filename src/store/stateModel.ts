@@ -14,5 +14,5 @@ export interface toogleSideAction {
 }
 
 export interface setLanguageAction {
-    (language: 'zh' | 'en'): never
+    (language: 'zh' | 'en'): never // eslint-disable-line no-unused-vars
 }
