@@ -19,6 +19,9 @@ module.exports = merge(common, {
         filename: 'javascript/[hash:20][id].js'
         // filename: 'javascript/[name].js'
     },
+    optimization: {
+        concatenateModules: true
+    },
     plugins: [
         ...isTestBuild ? [new BundleAnalyzerPlugin()] : [],
         new webpack.LoaderOptionsPlugin({
@@ -53,13 +56,10 @@ module.exports = merge(common, {
             },
             canPrint: true
         }),
-        new webpack.optimize.ModuleConcatenationPlugin(),
         new CompressionPlugin({
-            algorithm: 'gzip',
             filename: '[path].gz[query]',
             test: /\.(js|css|html|svg)$/,
             threshold: 8192,
-            deleteOriginalAssets: false,
             include: path.resolve(__dirname, '../src')
         })
         // // 将静态内容(如文档等)复制到build结果中
@@ -85,8 +85,7 @@ module.exports = merge(common, {
             use: [{
                 loader: MiniCssExtractPlugin.loader,
                 options: {
-                    publicPath: path.resolve(__dirname, '../dist'),
-                    hmr: process.env.NODE_ENV === 'production'
+                    publicPath: path.resolve(__dirname, '../dist')
                 }
             }, {
                 loader: 'css-loader',

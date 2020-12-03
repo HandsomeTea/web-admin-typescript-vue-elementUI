@@ -48,8 +48,7 @@ module.exports = merge(common, {
             use: [{
                 loader: MiniCssExtractPlugin.loader,
                 options: {
-                    publicPath: path.resolve(__dirname, '../dist'),
-                    hmr: process.env.NODE_ENV === 'development'
+                    publicPath: path.resolve(__dirname, '../dist')
                 }
             }, {
                 loader: 'css-loader'
