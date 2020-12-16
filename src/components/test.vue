@@ -7,7 +7,7 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator';
-import eleUITools from '../ui-frame/ui-tips';
+import Tips from '../ui-frame/ui-tips';
 
 @Component
 export default class Hoom extends Vue {
@@ -19,7 +19,7 @@ export default class Hoom extends Vue {
     value!: string;
 
     private clossss() {
-        eleUITools.closeAllNotice();
+        Tips.closeAllNotice();
     }
 }
 </script>

@@ -5,13 +5,13 @@ import store from './store';
 import router from './router';
 import i18n from './lang';
 import view from './views/index.vue';
-import eleUITools from './ui-frame/ui-tips';
+import Tips from './ui-frame/ui-tips';
 import './ui-frame';
 import './assets';
 Vue.config.productionTip = false;
 Vue.config.performance = true;
 Vue.config.errorHandler = async (error: Error /*, vm, info*/) => {
-    eleUITools.error(`${error}`);
+    Tips.error(`${error}`);
 };
 Vue.config.warnHandler = (msg: string /*, vm, trace*/) => {
     console.error(msg); /* eslint-disable-line no-console */
@@ -34,20 +34,23 @@ new Vue({
             }
         }
     },
+    created() {
+        store.dispatch('setScreenType');
+    },
     mounted() {
         let waitForResizeEndTimer: null | number = null;
 
         window.onresize = () => {
-            const waitTime = 800;
+            const waitTime = 500;
 
             if (waitForResizeEndTimer === null) {
                 waitForResizeEndTimer = window.setTimeout(() => {
-                    // store.dispatch('setScreenType');
+                    store.dispatch('setScreenType');
                 }, waitTime);
             } else {
                 clearTimeout(waitForResizeEndTimer);
                 waitForResizeEndTimer = window.setTimeout(() => {
-                    // store.dispatch('setScreenType');
+                    store.dispatch('setScreenType');
                 }, waitTime);
             }
         };

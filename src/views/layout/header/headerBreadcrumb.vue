@@ -7,10 +7,10 @@
 
         <li class="item">
             <el-breadcrumb separator="/" class="route_path">
-                <el-breadcrumb-item v-if="(!isHideMenu && screenWidth > 630) || screenWidth > 450">
+                <el-breadcrumb-item v-if="(isHideMenu && platform === 'phone') || platform !== 'phone'">
                     首页
                 </el-breadcrumb-item>
-                <el-breadcrumb-item v-if="(!isHideMenu && screenWidth > 630) || screenWidth > 450">
+                <el-breadcrumb-item v-if="(isHideMenu && platform === 'phone') || platform !== 'phone'">
                     活动管理
                 </el-breadcrumb-item>
                 <el-breadcrumb-item>活动列表</el-breadcrumb-item>
@@ -27,36 +27,21 @@ import { toogleSideAction } from '../../../store/stateModel';
 @Component
 export default class Breadcrumb extends Vue {
     @State('menuHidden')
-    private menuHiddenStatus!: boolean;
+    private menuHiddenStatus: boolean;
 
     private get isHideMenu() {
         return this.menuHiddenStatus;
     }
 
-    private screenWidth: number = document.body.clientWidth;
+    @State('screenType')
+    private platformType: 'phone' | 'ipad' | 'spc' | 'pc';
+
+    private get platform() {
+        return this.platformType;
+    }
 
     @Action('toogleSideShrink')
     private toogleMenu: toogleSideAction;
-
-    mounted(): void {
-        // 监听窗口大小
-        window.onresize = () => {
-            this.screenWidth = document.body.clientWidth;
-            this.dealWithSideToggle();
-        };
-    }
-
-    private dealWithSideToggle() {
-        if (document.body.clientWidth < 900) {
-            if (!this.isHideMenu) {
-                this.toogleMenu();
-            }
-        } else {
-            if (this.isHideMenu) {
-                this.toogleMenu();
-            }
-        }
-    }
 }
 </script>
 

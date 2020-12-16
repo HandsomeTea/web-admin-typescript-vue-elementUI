@@ -34,6 +34,10 @@ const store: StoreOptions<RootState> = {
         _setScreenType(state: RootState, type: 'phone' | 'ipad' | 'spc' | 'pc' | '') {
             if (state.screenType !== type) {
                 state.screenType = type;
+
+                if (state.screenType === 'phone' || state.screenType === 'ipad') {
+                    state.menuHidden = true;
+                }
             }
         }
     },
@@ -63,8 +67,7 @@ const store: StoreOptions<RootState> = {
                 commit('_setScreenType', 'ipad');
             }
         }
-    },
-    getters: {}
+    }
 };
 
 export default new Vuex.Store<RootState>(store);

@@ -14,7 +14,7 @@ import { Vue, Component, Watch } from 'vue-property-decorator';
 import { State, Action } from 'vuex-class';
 import { RootState, UserState, setLanguageAction } from '../../store/stateModel';
 import API from '../../api';
-import eleUITools from '../../ui-frame/ui-tips';
+import Tips from '../../ui-frame/ui-tips';
 // import DPlayer from 'dplayer';
 
 // 相当于原来vue的components属性
@@ -107,7 +107,7 @@ export default class Hoom extends Vue {
         //         {
         //             text: 'custom2',
         //             click: () => {
-        //                 eleUITools.success('菜单2');
+        //                 Tips.success('菜单2');
         //             }
         //         }
         //     ],
@@ -151,10 +151,10 @@ export default class Hoom extends Vue {
 
         if (error) {
             // throw error.type || 'USER_SAVE_FAILED';
-            return eleUITools.alert('test message', 'test');
-            // return eleUITools.error(error?.type || 'USER_SAVE_FAILED');
+            return Tips.alert('test message', 'test');
+            // return Tips.error(error?.type || 'USER_SAVE_FAILED');
         }
-        eleUITools.success('SUCCESS');
+        Tips.success('SUCCESS');
         console.log(456); /* eslint-disable-line no-console */
         console.log(data); /* eslint-disable-line no-console */
     }
