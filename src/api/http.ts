@@ -112,7 +112,7 @@ class HTTP {
             // baseURL: ['development', undefined].includes(process?.env?.NODE_ENV) ? undefined : 'https://xxx.xxx.cxx',
             headers: options.headers,
             params: { ...options.params },
-            data: { ...options.data }
+            data: typeof options.data === 'object' && !Array.isArray(options.data) ? { ...options.data } : options.data
         });
     }
 
