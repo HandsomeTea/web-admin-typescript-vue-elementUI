@@ -1,33 +1,43 @@
 import Vue from 'vue';
 import Vuex, { StoreOptions } from 'vuex';
 import { RootState } from './stateModel';
-import user from './user'
+import user from './user';
 
 Vue.use(Vuex);
 
 const state: RootState = {
     loginStatus: false,
-    language: 'zh',
-    menuHidden: false
+    language: (window.navigator.language || 'zh').toLowerCase().split('-')[0],
+    menuHidden: false,
+    screenType: ''
 };
 const store: StoreOptions<RootState> = {
     modules: {
-        user,
+        user
     },
     state,
     mutations: {
-        _toogleSideShrink(state) {
+        _toogleSideShrink(state: RootState) {
             state.menuHidden = !state.menuHidden;
         },
-        _login(state) {
+        _login(state: RootState) {
             state.loginStatus = true;
         },
-        _logout(state) {
+        _logout(state: RootState) {
             state.loginStatus = false;
         },
         _setLanguage(state: RootState, language: string) {
             if (state.language !== language) {
                 state.language = language;
+            }
+        },
+        _setScreenType(state: RootState, type: 'phone' | 'ipad' | 'spc' | 'pc' | '') {
+            if (state.screenType !== type) {
+                state.screenType = type;
+
+                if (state.screenType === 'phone' || state.screenType === 'ipad') {
+                    state.menuHidden = true;
+                }
             }
         }
     },
@@ -43,10 +53,21 @@ const store: StoreOptions<RootState> = {
         },
         setLanguage({ commit }, language: string) {
             commit('_setLanguage', language);
-        }
-    },
-    getters: {
+        },
+        setScreenType({ commit }) {
+            const size = document.body.offsetWidth;
 
+            if (size <= 767) {
+                commit('_setScreenType', 'phone');
+            } else if (size > 1200) {
+                commit('_setScreenType', 'pc');
+            } else if (size > 992) {
+                commit('_setScreenType', 'spc');
+            } else if (size > 768) {
+                commit('_setScreenType', 'ipad');
+            }
+        }
     }
-}
+};
+
 export default new Vuex.Store<RootState>(store);

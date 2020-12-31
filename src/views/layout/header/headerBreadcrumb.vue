@@ -7,10 +7,13 @@
 
         <li class="item">
             <el-breadcrumb separator="/" class="route_path">
-                <el-breadcrumb-item>首页</el-breadcrumb-item>
-                <el-breadcrumb-item>活动管理</el-breadcrumb-item>
+                <el-breadcrumb-item v-if="(isHideMenu && platform === 'phone') || platform !== 'phone'">
+                    首页
+                </el-breadcrumb-item>
+                <el-breadcrumb-item v-if="(isHideMenu && platform === 'phone') || platform !== 'phone'">
+                    活动管理
+                </el-breadcrumb-item>
                 <el-breadcrumb-item>活动列表</el-breadcrumb-item>
-                <el-breadcrumb-item>活动详情</el-breadcrumb-item>
             </el-breadcrumb>
         </li>
     </ul>
@@ -19,43 +22,34 @@
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
 import { State, Action } from 'vuex-class';
+import { toogleSideAction } from '../../../store/stateModel';
 
 @Component
 export default class Breadcrumb extends Vue {
     @State('menuHidden')
-    private menuHiddenStatus!: boolean;
+    private menuHiddenStatus: boolean;
 
     private get isHideMenu() {
         return this.menuHiddenStatus;
     }
 
+    @State('screenType')
+    private platformType: 'phone' | 'ipad' | 'spc' | 'pc';
+
+    private get platform() {
+        return this.platformType;
+    }
+
     @Action('toogleSideShrink')
-    private toogleMenu: any;
-
-    mounted() {
-        // 监听窗口大小
-        window.onresize = () => {
-            this.dealWithSideToggle();
-        };
-    }
-
-    private dealWithSideToggle() {
-        if (document.body.clientWidth < 900) {
-            if (!this.isHideMenu) {
-                this.toogleMenu();
-            }
-        } else {
-            if (this.isHideMenu) {
-                this.toogleMenu();
-            }
-        }
-    }
+    private toogleMenu: toogleSideAction;
 }
 </script>
 
 <style lang="less" scoped>
 .head_title {
     left: @layout_menu_width_big;
+    height: @layout_head_height;
+    overflow: hidden;
 }
 
 .item {

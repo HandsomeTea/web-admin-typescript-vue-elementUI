@@ -1,16 +1,11 @@
-import axios, { AxiosRequestConfig, AxiosResponse, Method } from 'axios';
+import axios, { AxiosRequestConfig, AxiosResponse, AxiosError, Method } from 'axios';
 import Agent from 'agentkeepalive';
-import {
-    Message
-} from 'element-ui';
-import { type } from '../utils';
-import store from '../store';
-import i18n from '../lang';
+import { isString } from '../utils';
 
 class Exception extends Error {
     private status: number;
     private type?: string | undefined;
-    private info: string | object;
+    private error: Record<string, unknown>;
     private httpInfo: string;
 
     constructor(error: httpException) {
@@ -18,17 +13,17 @@ class Exception extends Error {
 
         this.status = error.status;
         this.type = error.type;
-        this.info = error.info;
-        this.httpInfo = error.httpInfo
+        this.error = error.error;
+        this.httpInfo = error.httpInfo;
     }
 }
 
-export default new class HTTP {
+class HTTP {
     constructor() {
         this._init();
     }
 
-    _init() {
+    private _init(): void {
         axios.defaults.timeout = 10000;
         axios.defaults.httpAgent = new Agent({
             keepAlive: true,
@@ -46,55 +41,55 @@ export default new class HTTP {
         axios.interceptors.response.use(this._receiveSuccessResponse, this._receiveResponseNotSuccess);
     }
 
-    _beforeSendToServer(config: AxiosRequestConfig) {
-        const zh = config.url && config.url.match(/[\u4e00-\u9fa5]/g);
+    private _beforeSendToServer(config: AxiosRequestConfig): AxiosRequestConfig {
+        const zh = config.url?.match(/[\u4e00-\u9fa5]/g);
 
         if (zh) {
-            const _obj: object = {};
+            const _obj: Record<string, string> = {};
 
-            for (let i: number = 0; i < zh.length; i++) {
+            for (let i = 0; i < zh.length; i++) {
                 if (!_obj[zh[i]]) {
                     _obj[zh[i]] = encodeURIComponent(zh[i]);
                 }
             }
 
             for (const key in _obj) {
-                config.url = config.url && config.url.replace(new RegExp(key, 'g'), _obj[key]);
+                config.url = config.url?.replace(new RegExp(key, 'g'), _obj[key]);
             }
         }
 
         return config;
     }
 
-    async _beforeSendToServerButError(error: any) {
-        Message.error(i18n.t('FAILED').toString());
-        return Promise.reject(new Exception({
-            httpInfo: `${error}`,
-            status: 0,
-            info: 'request send error: not send.'
-        }));
+    private async _beforeSendToServerButError(error: unknown): Promise<httpException> {
+        return Promise.reject(
+            new Exception({
+                httpInfo: `${error}`,
+                status: 0,
+                error: {
+                    info: 'request send error: not send.'
+                }
+            })
+        );
     }
 
-    async _receiveSuccessResponse(response: AxiosResponse) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    private async _receiveSuccessResponse(response: AxiosResponse): Promise<any> {
         // 这里只处理 response.status >= 200 && response.status <= 207 的情况
-        Message({
-            message: i18n.t('SUCCESS').toString(),
-            type: 'success'
-        });
-        const { data/*, config, headers, request, status, statusText*/ } = response;
+        const { data /*, config, headers, request, status, statusText*/ } = response;
 
         return Promise.resolve(data.data);
     }
 
-    async _receiveResponseNotSuccess(error: any) {
+    private async _receiveResponseNotSuccess(error: AxiosError): Promise<httpException> {
         // const { message, name, description, number, fileName, lineNumber, columnNumber, stack, code } = error.toJSON();
-        const { response, config/*, request */ } = error;
-        const { baseURL/*, url, method*/ } = config;
+        const { response, config, request: { responseURL } } = error;
+        // const { url, baseURL, method } = config;
 
         let errorResult: httpException = {
             status: 500,
-            httpInfo: ` 访问 ${baseURL} 失败`,
-            info: ''
+            httpInfo: ` 访问 ${config ? config.baseURL : responseURL} 失败`,
+            error: { info: '' }
         };
 
         if (response) {
@@ -103,37 +98,39 @@ export default new class HTTP {
             errorResult = {
                 status,
                 httpInfo: statusText,
-                ...type(data) === 'string' ? { info: data } : data
+                ...isString(data) ? { error: { info: data } } : data
             };
         }
 
         return Promise.reject(new Exception(errorResult));
     }
 
-    async send(url: string, method: Method, options: httpArgument) {
+    public async send(url: string, method: Method, options: httpArgument): Promise<AxiosResponse> {
         return await axios.request({
             url,
             method,
-            baseURL: process && process.env && process.env.NODE_ENV && ['development', undefined].includes(process.env.NODE_ENV) ? undefined : 'https://xxx.xxx.cxx',
+            // baseURL: ['development', undefined].includes(process?.env?.NODE_ENV) ? undefined : 'https://xxx.xxx.cxx',
             headers: options.headers,
             params: { ...options.params },
-            data: { ...options.data }
+            data: typeof options.data === 'object' && !Array.isArray(options.data) ? { ...options.data } : options.data
         });
     }
 
-    async post(url: string, options: httpArgument) {
+    public async post(url: string, options: httpArgument): Promise<AxiosResponse> {
         return await this.send(url, 'post', { params: options.params, headers: options.headers, data: options.data });
     }
 
-    async delete(url: string, options: httpArgument) {
+    public async delete(url: string, options: httpArgument): Promise<AxiosResponse> {
         return await this.send(url, 'delete', { params: options.params, headers: options.headers, data: options.data });
     }
 
-    async put(url: string, options: httpArgument) {
+    public async put(url: string, options: httpArgument): Promise<AxiosResponse> {
         return await this.send(url, 'put', { params: options.params, headers: options.headers, data: options.data });
     }
 
-    async get(url: string, options: httpArgument) {
+    public async get(url: string, options: httpArgument): Promise<AxiosResponse> {
         return await this.send(url, 'get', { params: options.params, headers: options.headers, data: options.data });
     }
-};
+}
+
+export default new HTTP();

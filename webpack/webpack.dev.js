@@ -1,15 +1,19 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 const path = require('path');
 const webpack = require('webpack');
-const merge = require('webpack-merge');
+const { merge } = require('webpack-merge');
 const common = require('./webpack.common');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = merge(common, {
     mode: 'development',
-    devtool: 'inline-source-map',
+    devtool: 'eval-source-map',
     stats: 'minimal',
     output: {
         filename: 'javascript/[name].js'
+    },
+    performance: {
+        hints: 'warning'
     },
     plugins: [
         new webpack.DefinePlugin({
@@ -33,6 +37,7 @@ module.exports = merge(common, {
             use: [{
                 loader: 'file-loader',
                 options: {
+                    esModule: false,
                     outputPath: 'images',
                     publicPath: '../images',
                     name: '[name].[ext]'
@@ -43,8 +48,7 @@ module.exports = merge(common, {
             use: [{
                 loader: MiniCssExtractPlugin.loader,
                 options: {
-                    publicPath: path.resolve(__dirname, '../dist'),
-                    hmr: process.env.NODE_ENV === 'development'
+                    publicPath: path.resolve(__dirname, '../dist')
                 }
             }, {
                 loader: 'css-loader'
@@ -61,16 +65,15 @@ module.exports = merge(common, {
             }, {
                 loader: 'style-resources-loader',
                 options: {
-                    patterns: [path.resolve(__dirname, '../src/assets/css/base/global.less')]
+                    patterns: [path.resolve(__dirname, '../src/assets/css/global-var.less')]
                 }
-            }
-            ]
+            }]
         }]
     },
     devServer: {
         contentBase: path.resolve(__dirname, '../dist'),
-        // compress: true,
-        port: 9002,
+        compress: true,
+        port: 9003,
         host: '0.0.0.0',
         index: 'index.html',
         headers: {
@@ -81,11 +84,16 @@ module.exports = merge(common, {
         // lazy: false,
         // noInfo: true,
         open: true,
-        overlay: true,//编译运行时的错误直接显示在浏览器
+        overlay: true, //编译运行时的错误直接显示在浏览器
         proxy: [{
             context: ['/tests'],
             target: 'http://localhost:3000',
             secure: false
+        }, {
+            context: () => true,
+            target: 'https://surpass-dev.bizconf.cn/',
+            secure: false,
+            changeOrigin: true
         }],
         // quiet: false,
         useLocalIp: true

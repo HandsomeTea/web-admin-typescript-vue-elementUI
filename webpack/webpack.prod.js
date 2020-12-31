@@ -1,19 +1,34 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 const webpack = require('webpack');
-const merge = require('webpack-merge');
+const { merge } = require('webpack-merge');
 const common = require('./webpack.common');
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CleanCSSPlugin = require('less-plugin-clean-css');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const CompressionPlugin = require('compression-webpack-plugin');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+const isTestBuild = process.argv.includes('-build-test');
+// const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = merge(common, {
     mode: 'production',
-    devtool: 'none',
+    devtool: 'source-map',
     stats: 'errors-only',
     output: {
         filename: 'javascript/[hash:20][id].js'
+        // filename: 'javascript/[name].js'
+    },
+    optimization: {
+        concatenateModules: true
     },
     plugins: [
+        ...isTestBuild ? [new BundleAnalyzerPlugin()] : [],
+        new webpack.LoaderOptionsPlugin({
+            options: {
+                productionGzip: true
+            }
+        }),
         new webpack.DefinePlugin({
             'process.env': {
                 NODE_ENV: JSON.stringify('production')
@@ -40,17 +55,26 @@ module.exports = merge(common, {
                 }]
             },
             canPrint: true
+        }),
+        new CompressionPlugin({
+            filename: '[path].gz[query]',
+            test: /\.(js|css|html|svg)$/,
+            threshold: 8192,
+            include: path.resolve(__dirname, '../src')
         })
+        // // 将静态内容(如文档等)复制到build结果中
+        // new CopyPlugin({
+        //     patterns: [{ from: path.resolve(__dirname, '../src/views/docs'), to: path.resolve(__dirname, '../dist/docs') }],
+        //     options: {}
+        // })
     ],
-    optimization: {
-        minimize: true
-    },
     module: {
         rules: [{
             test: /\.(png|svg|jpg|jpeg|gif|woff|woff2|eot|ttf|otf|ico|pub)$/i,
             use: [{
                 loader: 'file-loader',
                 options: {
+                    esModule: false,
                     outputPath: 'image',
                     publicPath: '../image',
                     name: '[hash:20].[ext]'
@@ -61,8 +85,7 @@ module.exports = merge(common, {
             use: [{
                 loader: MiniCssExtractPlugin.loader,
                 options: {
-                    publicPath: path.resolve(__dirname, '../dist'),
-                    hmr: process.env.NODE_ENV === 'production'
+                    publicPath: path.resolve(__dirname, '../dist')
                 }
             }, {
                 loader: 'css-loader',
@@ -85,9 +108,7 @@ module.exports = merge(common, {
             }, {
                 loader: 'style-resources-loader',
                 options: {
-                    patterns: [
-                        path.resolve(__dirname, '../src/assets/css/base/global.less')
-                    ]
+                    patterns: [path.resolve(__dirname, '../src/assets/css/global-var.less')]
                 }
             }]
         }]

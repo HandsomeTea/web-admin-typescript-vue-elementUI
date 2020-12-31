@@ -1,35 +1,38 @@
 import Vue from 'vue';
-import VueRouter, { RouteConfig } from 'vue-router';
+import VueRouter, { RouteConfig, Route, NavigationGuardNext } from 'vue-router';
 
 Vue.use(VueRouter);
 
-const routes: RouteConfig[] = [{
+const routes: Array<RouteConfig> = [{
     path: '/',
     redirect: '/index',
-    component: () => import('../views/layout/index.vue'),
+    component: () => import(/* webpackChunkName: 'layout' */ '../views/layout/index.vue'),
     children: [{
         path: '/index',
-        component: () => import('../views/home/index.vue')
+        component: () => import(/* webpackChunkName: 'home' */ '../views/home/index.vue')
     }]
 }, {
     path: '/login',
-    component: () =>
-        import('../views/login.vue')
+    component: () => import(/* webpackChunkName: 'layout' */ '../views/login.vue')
 }];
 
 const route = new VueRouter({
+    mode: process?.env?.NODE_ENV === 'development' ? 'hash' : 'history',
     routes
 });
 
-/** 全局导航守卫 */
+/**
+ * 全局导航守卫
+ */
+
 /* 前置导航守卫 */
-route.beforeEach((to, from, next) => {
+route.beforeEach((to: Route, from: Route, next: NavigationGuardNext) => {
     // do something before next route
-    next()
+    next();
 });
 
 /* 后置导航守卫 */
-route.afterEach((to, from) => {
+route.afterEach((/*to: Route, from: Route*/) => {
     // do something after route
 });
 

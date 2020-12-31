@@ -8,5 +8,8 @@
     "NOT_FOUND": "操作对象未找到",
     "TOO_MANY_REQUESTS": "服务器繁忙",
     "INVALID_ARGUMENTS": "参数错误",
-    "USER_SAVE_FAILED": "用户保存失败"
+    "USER_SAVE_FAILED": "用户保存失败",
+    "yes": "确定",
+    "cancel": "取消",
+    "it_is_illegal": "不合法"
 }

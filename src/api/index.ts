@@ -1,15 +1,25 @@
 import HTTP from './http';
 
-export default new class API {
-    constructor() {
-        this._init();
+class _Base {
+    public errorHandle(error: httpException): Promise<apiResult> {
+        return Promise.resolve({ error });
     }
 
-    _init() {
-
-    }
-
-    async test(body?: object) {
-        return await HTTP.get('/tests/test/api', { data: body });
+    public successHandle(data: unknown): Promise<apiResult> {
+        return Promise.resolve({ data });
     }
 }
+
+class Accounts extends _Base {
+    constructor() {
+        super();
+    }
+
+    public async test(body?: Record<string, unknown>): Promise<apiResult> {
+        return HTTP.get('/tests/test/api', { data: body }).then(r => this.successHandle(r)).catch(e => this.errorHandle(e));
+    }
+}
+
+export default {
+    Account: new Accounts()
+};
