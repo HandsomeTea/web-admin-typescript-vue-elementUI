@@ -1,7 +1,7 @@
 {
   "name": "web-admin-typescript-vue-elementui",
   "version": "1.0.0",
-  "description": "study for vue+typescript+webpack+elementui",
+  "description": "基于vue全家桶+typescript+elementui等前端ui框架的web admin项目",
   "main": "index.js",
   "scripts": {
     "start": "./node_modules/.bin/webpack-dev-server --config webpack/webpack.dev.js",
